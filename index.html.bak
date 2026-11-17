@@ -1,0 +1,2184 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f8faf9" />
+    <title>RELIAagents — AI agents that handle your customers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #3592b1;
+            --surface: #ffffff;
+            --surface-elevated: #ffffff;
+            --surface-subtle: #f0f5f3;
+            --ink: #0c1c22;
+            --ink-secondary: #213740;
+            --muted: #5e7178;
+            --line: rgba(210, 224, 221, 0.75);
+            --line-strong: #c4d7d3;
+            --accent: #0f766e;
+            --accent-bright: #059669;
+            --accent-emerald: #10b981;
+            --accent-gradient: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+            --accent-glow: rgba(13, 148, 136, 0.28);
+            --accent-soft: rgba(13, 148, 136, 0.08);
+            --deep: #091a22;
+            --radius: 18px;
+            --radius-sm: 10px;
+            --radius-lg: 26px;
+            --shadow-subtle: 0 4px 20px -2px rgba(12, 28, 34, .04), 0 0 0 1px rgba(12, 28, 34, .03);
+            --shadow: 0 18px 45px -12px rgba(12, 28, 34, .08), 0 0 0 1px rgba(12, 28, 34, .04);
+            --shadow-glow: 0 20px 45px -10px rgba(13, 148, 136, .22);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background-color: #1e40af;
+            background-image:
+                radial-gradient(ellipse 65% 55% at 88% 18%, rgba(147, 197, 253, 0.5) 0%, rgba(56, 189, 248, 0.25) 35%, transparent 70%),
+                radial-gradient(ellipse 55% 45% at 12% 82%, rgba(15, 30, 100, 0.55) 0%, transparent 65%),
+                linear-gradient(125deg, #122874 0%, #1e40af 30%, #2563eb 58%, #60a5fa 82%, #93c5fd 100%);
+            background-attachment: fixed;
+            font-family: 'Plus Jakarta Sans', Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c5d8d4;
+            border-radius: 999px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9bb7b1;
+        }
+
+        ::selection {
+            background: #0d9488;
+            color: #ffffff;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        button,
+        a {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .shell {
+            width: min(100% - 48px, 1180px);
+            margin: 0 auto;
+        }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            border-bottom: 1px solid rgba(223, 231, 230, .6);
+            background: rgba(248, 250, 249, .82);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            transition: border-color .2s ease, background-color .2s ease;
+        }
+
+        .nav-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 72px;
+        }
+
+        .wordmark {
+            display: inline-flex;
+            align-items: center;
+            color: var(--ink);
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -.05em;
+        }
+
+        .wordmark span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .wordmark::after {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-emerald);
+            margin-left: 4px;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+        }
+
+        .site-nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            margin-left: auto;
+            margin-right: 30px;
+        }
+
+        .site-nav a {
+            position: relative;
+            color: var(--muted);
+            font-size: 13.5px;
+            font-weight: 550;
+            transition: color .2s ease;
+        }
+
+        .site-nav a:hover {
+            color: var(--ink);
+        }
+
+        .site-nav a::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            border-radius: 999px;
+            background: var(--accent);
+            transform: translateX(-50%);
+            transition: width .2s ease;
+        }
+
+        .site-nav a:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .language {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            padding: 3px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 8px rgba(12, 28, 34, 0.04);
+        }
+
+        .language button {
+            border: 0;
+            border-radius: 999px;
+            padding: 6px 10px;
+            color: var(--muted);
+            background: transparent;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            transition: all .2s ease;
+        }
+
+        .language button.active {
+            color: #ffffff;
+            background: var(--ink);
+            box-shadow: 0 2px 6px rgba(12, 28, 34, 0.15);
+        }
+
+        .button {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 42px;
+            padding: 0 18px;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: -.01em;
+            transition: transform .2s cubic-bezier(0.16, 1, 0.3, 1), background .2s ease, border-color .2s ease, box-shadow .2s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .button:active {
+            transform: translateY(0);
+        }
+
+        .button-primary {
+            overflow: hidden;
+            color: #ffffff;
+            background: var(--accent-gradient);
+            box-shadow: 0 8px 24px -4px rgba(13, 148, 136, .4);
+        }
+
+        .button-primary::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 40%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+            transform: rotate(25deg);
+            transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        .button-primary:hover {
+            box-shadow: 0 12px 28px -4px rgba(13, 148, 136, .52);
+        }
+
+        .button-primary:hover::after {
+            transform: translateX(450%) rotate(25deg);
+        }
+
+        .button-secondary {
+            color: var(--ink);
+            border-color: var(--line);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 10px rgba(12, 28, 34, 0.04);
+        }
+
+        .button-secondary:hover {
+            border-color: #a4bbb7;
+            background: #ffffff;
+            box-shadow: 0 6px 18px rgba(12, 28, 34, 0.08);
+        }
+
+        .menu-button {
+            display: none;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            color: var(--ink);
+            background: var(--surface);
+            box-shadow: 0 2px 8px rgba(12, 28, 34, 0.04);
+        }
+
+        .menu-button span,
+        .menu-button::before,
+        .menu-button::after {
+            display: block;
+            width: 16px;
+            height: 1.5px;
+            margin: 4px auto;
+            background: currentColor;
+            content: "";
+            transition: transform .2s ease;
+        }
+
+        .site-header.nav-open .menu-button span {
+            opacity: 0;
+        }
+
+        .site-header.nav-open .menu-button::before {
+            transform: translateY(5.5px) rotate(45deg);
+        }
+
+        .site-header.nav-open .menu-button::after {
+            transform: translateY(-5.5px) rotate(-45deg);
+        }
+
+        main {
+            overflow: hidden;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 110px 0 90px;
+            position: relative;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin: 0 auto 24px;
+            padding: 7px 16px 7px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: var(--accent);
+            font-size: 11.5px;
+            font-weight: 750;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(8px);
+        }
+
+        .section-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin: 0 0 18px;
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 750;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-emerald);
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse-ring 2.2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+            content: "";
+        }
+
+        .section-kicker::before {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: currentColor;
+            content: "";
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0;
+        }
+
+        h1 {
+            max-width: 840px;
+            margin-bottom: 24px;
+            font-size: clamp(44px, 5.8vw, 76px);
+            line-height: 1.02;
+            letter-spacing: -.05em;
+            font-weight: 800;
+            text-wrap: balance;
+            background: linear-gradient(180deg, #0c1c22 10%, #203942 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-copy {
+            max-width: 640px;
+            color: var(--muted);
+            font-size: 18.5px;
+            line-height: 1.6;
+            letter-spacing: -.015em;
+            text-wrap: pretty;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 36px;
+        }
+
+        .hero-actions .button {
+            min-height: 48px;
+            padding: 0 28px;
+            font-size: 14px;
+        }
+
+        .hero-actions .button-primary {
+            box-shadow: 0 12px 28px -6px rgba(13, 148, 136, .45);
+        }
+
+        .hero-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 22px;
+            color: var(--muted);
+            font-size: 12.5px;
+            font-weight: 500;
+        }
+        .hero-copy,
+        .hero-note,
+        .section-subtitle,
+        .section-kicker,
+        .eyebrow,
+        .capability-intro p,
+        .conversation-intro p,
+        .demo-meta p {
+            color: rgba(255, 255, 255, 0.88);
+        }
+
+
+        .hero-note::before {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            content: "";
+        }
+
+        .hero-badges {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 34px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 15px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid var(--line);
+            color: var(--ink-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(12, 28, 34, 0.03);
+            backdrop-filter: blur(8px);
+        }
+
+        .section {
+            padding: 108px 0;
+            scroll-margin-top: 80px;
+            position: relative;
+        }
+
+        .section-border {
+            border-top: 1px solid var(--line);
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 44px;
+        }
+
+        h2 {
+            max-width: 680px;
+            margin-bottom: 0;
+            font-size: clamp(33px, 4vw, 54px);
+            line-height: 1.04;
+            letter-spacing: -.05em;
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            max-width: 340px;
+            margin-bottom: 4px;
+            color: var(--muted);
+            font-size: 14.5px;
+            line-height: 1.55;
+        }
+
+        .demo-tabs {
+            display: inline-flex;
+            justify-content: center;
+            gap: 6px;
+            margin: 0 auto 30px;
+            padding: 5px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgba(230, 240, 237, 0.55);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 12px rgba(12, 28, 34, 0.04);
+        }
+
+        .demo-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            color: var(--muted);
+            background: transparent;
+            font-size: 12.5px;
+            font-weight: 650;
+            transition: all .2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .demo-tab span {
+            color: #8c9ea2;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .08em;
+        }
+
+        .demo-tab:hover {
+            color: var(--ink);
+        }
+
+        .demo-tab.active {
+            border-color: rgba(12, 28, 34, 0.1);
+            color: #ffffff;
+            background: var(--ink);
+            box-shadow: 0 4px 14px rgba(12, 28, 34, 0.2);
+        }
+
+        .demo-tab.active span {
+            color: #7dd3c0;
+        }
+
+        .demo-stage {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+            aspect-ratio: 9 / 16;
+            border-radius: 38px;
+            border: 10px solid #142026;
+            background: #000000;
+            box-shadow: 0 35px 85px -15px rgba(13, 148, 136, 0.3), 0 0 0 1px rgba(255, 255, 255, .12) inset;
+            transition: opacity .25s ease, transform .25s ease, box-shadow .3s ease;
+        }
+
+        .demo-stage::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 88px;
+            height: 20px;
+            background: #142026;
+            border-radius: 20px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .demo-stage.is-switching {
+            opacity: .45;
+            transform: translateY(6px) scale(0.99);
+        }
+
+        .demo-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+            opacity: 0;
+            transition: opacity .35s ease;
+        }
+
+        .demo-video.has-source {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .demo-video.has-source~.demo-placeholder,
+        .demo-video.has-source~.demo-play {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        .demo-placeholder {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            text-align: center;
+            background:
+                linear-gradient(rgba(255, 255, 255, .06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .06) 1px, transparent 1px),
+                var(--deep);
+            background-size: 40px 40px;
+        }
+
+        .demo-placeholder-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .demo-placeholder-icon {
+            display: grid;
+            place-items: center;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 18px;
+            border: 1px solid rgba(157, 226, 214, .32);
+            border-radius: 50%;
+            color: #ffffff;
+            background: rgba(13, 148, 136, .28);
+            box-shadow: 0 0 25px rgba(13, 148, 136, 0.4);
+        }
+
+        .demo-placeholder strong {
+            display: block;
+            color: #ffffff;
+            font-size: 17px;
+            letter-spacing: -.03em;
+        }
+
+        .demo-placeholder small {
+            display: block;
+            margin-top: 8px;
+            color: #9cb6b1;
+            font-size: 11.5px;
+        }
+
+        .demo-play {
+            position: absolute;
+            right: 22px;
+            bottom: 22px;
+            z-index: 2;
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            border: 0;
+            border-radius: 50%;
+            color: #ffffff;
+            background: var(--accent);
+            box-shadow: 0 0 0 7px rgba(13, 148, 136, .25), 0 8px 20px rgba(13, 148, 136, 0.5);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .demo-play:hover {
+            transform: scale(1.06);
+            box-shadow: 0 0 0 9px rgba(13, 148, 136, .35), 0 10px 24px rgba(13, 148, 136, 0.6);
+        }
+
+        .demo-meta {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 24px 4px 0;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+
+        .demo-meta h3 {
+            margin-bottom: 6px;
+            font-size: 16.5px;
+            letter-spacing: -.03em;
+            font-weight: 700;
+        }
+
+        .demo-meta p {
+            max-width: 650px;
+            margin-bottom: 0;
+            color: var(--muted);
+            font-size: 13.5px;
+            line-height: 1.55;
+        }
+
+        .demo-context {
+            flex: 0 0 auto;
+            padding: 7px 12px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: var(--accent);
+            background: rgba(255, 255, 255, 0.75);
+            font-size: 10.5px;
+            font-weight: 700;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(12, 28, 34, 0.03);
+        }
+
+        .demo-cta-banner {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            margin: 48px auto 0;
+            padding: 38px 46px;
+            border-radius: 26px;
+            background: 
+                radial-gradient(circle at 8% 20%, rgba(13, 148, 136, 0.38) 0%, transparent 55%),
+                radial-gradient(circle at 92% 80%, rgba(16, 185, 129, 0.24) 0%, transparent 50%),
+                linear-gradient(140deg, #091b24 0%, #0e2b38 52%, #081720 100%);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            box-shadow: 0 28px 70px -15px rgba(9, 26, 34, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+
+        .demo-cta-banner::before {
+            content: "";
+            position: absolute;
+            top: -60px;
+            left: 35%;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(45, 212, 191, 0.14) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .demo-cta-copy {
+            position: relative;
+            z-index: 1;
+        }
+
+        .demo-cta-copy h3 {
+            margin-bottom: 8px;
+            font-size: clamp(22px, 2.5vw, 26px);
+            font-weight: 800;
+            letter-spacing: -.035em;
+            color: #ffffff;
+        }
+
+        .demo-cta-copy p {
+            margin: 0;
+            color: #a4c4be;
+            font-size: 14.5px;
+            line-height: 1.6;
+            max-width: 580px;
+        }
+
+        .demo-store-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 14px;
+            padding: 5px 13px;
+            border-radius: 999px;
+            background: rgba(13, 148, 136, 0.2);
+            border: 1px solid rgba(45, 212, 191, 0.3);
+            color: #5eead4;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: .02em;
+            backdrop-filter: blur(8px);
+        }
+
+        .demo-store-note::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        .demo-cta-action {
+            position: relative;
+            z-index: 1;
+            flex: 0 0 auto;
+        }
+
+        .demo-cta-action .button-primary {
+            min-height: 50px;
+            padding: 0 30px;
+            font-size: 14px;
+            font-weight: 750;
+            box-shadow: 0 10px 28px -4px rgba(13, 148, 136, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+        }
+
+        .demo-cta-action .button-primary:hover {
+            box-shadow: 0 14px 34px -4px rgba(13, 148, 136, 0.72), 0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+        }
+
+        .capability-layout {
+            display: grid;
+            grid-template-columns: .75fr 1.25fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .capability-intro p {
+            max-width: 320px;
+            margin-top: 20px;
+            color: var(--muted);
+            font-size: 14.5px;
+            line-height: 1.6;
+        }
+
+        .capability-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            border-top: none;
+        }
+
+        .capability {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-height: 68px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            box-shadow: 0 4px 16px -2px rgba(12, 28, 34, 0.03);
+            backdrop-filter: blur(10px);
+            font-size: 13.5px;
+            font-weight: 600;
+            line-height: 1.4;
+            transition: transform .22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .22s ease, border-color .22s ease, background .22s ease;
+        }
+
+        .capability:nth-child(even) {
+            padding-left: 20px;
+            border-left: 1px solid var(--line);
+        }
+
+        .capability:hover {
+            transform: translateY(-3px);
+            border-color: rgba(13, 148, 136, 0.35);
+            box-shadow: 0 12px 28px -6px rgba(13, 148, 136, 0.14);
+            background: #ffffff;
+        }
+
+        .capability-index {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 800;
+            flex-shrink: 0;
+            border: 1px solid rgba(13, 148, 136, 0.15);
+        }
+
+        .customization {
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 50px;
+            margin-top: 64px;
+            padding: 40px 44px;
+            border-radius: 24px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #091a22 0%, #102d3a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 60px -15px rgba(9, 26, 34, 0.35);
+        }
+
+        .customization::before {
+            content: "";
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(13, 148, 136, 0.35) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .customization h3 {
+            margin-bottom: 0;
+            font-size: 28px;
+            letter-spacing: -.05em;
+            font-weight: 800;
+        }
+
+        .customization p {
+            max-width: 540px;
+            margin: 2px 0 0;
+            color: #a9c4bd;
+            font-size: 13.5px;
+            line-height: 1.65;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            border-top: none;
+        }
+
+        .step {
+            min-height: 200px;
+            padding: 26px 24px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid var(--line);
+            box-shadow: 0 4px 20px -2px rgba(12, 28, 34, 0.03);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+            transition: transform .25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .25s ease, border-color .25s ease;
+        }
+
+        .step+.step {
+            padding-left: 24px;
+            border-left: 1px solid var(--line);
+        }
+
+        .step:hover {
+            transform: translateY(-4px);
+            border-color: rgba(13, 148, 136, 0.35);
+            box-shadow: 0 16px 36px -8px rgba(13, 148, 136, 0.14);
+            background: #ffffff;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 800;
+            border: 1px solid rgba(13, 148, 136, 0.18);
+        }
+
+        .step h3 {
+            margin-bottom: 8px;
+            font-size: 17px;
+            letter-spacing: -.035em;
+            font-weight: 750;
+        }
+
+        .step p {
+            max-width: 220px;
+            margin-bottom: 0;
+            color: var(--muted);
+            font-size: 12.5px;
+            line-height: 1.6;
+        }
+
+        .industries {
+            border: none;
+        }
+
+        .industries.single {
+            display: grid;
+            grid-template-columns: minmax(0, 720px);
+            border: none;
+        }
+
+        .industry {
+            min-height: 190px;
+            padding: 36px 38px;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid var(--line);
+            box-shadow: 0 8px 30px -4px rgba(12, 28, 34, 0.04);
+            backdrop-filter: blur(10px);
+            transition: transform .25s cubic-bezier(0.16, 1, 0.3, 1), border-color .25s ease, box-shadow .25s ease;
+        }
+
+        .industry:hover {
+            transform: translateY(-3px);
+            border-color: rgba(13, 148, 136, 0.35);
+            box-shadow: 0 16px 40px -8px rgba(13, 148, 136, 0.14);
+            background: #ffffff;
+        }
+
+        .industry-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 32px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            color: #065f46;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            font-size: 11px;
+            font-weight: 750;
+            letter-spacing: .04em;
+        }
+
+        .industry-tag::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 6px #10b981;
+        }
+
+        .industry h3 {
+            margin-bottom: 10px;
+            font-size: 22px;
+            letter-spacing: -.045em;
+            font-weight: 800;
+        }
+
+        .industry p {
+            max-width: 480px;
+            margin-bottom: 0;
+            color: var(--muted);
+            font-size: 13.5px;
+            line-height: 1.55;
+        }
+
+        .conversation-layout {
+            display: grid;
+            grid-template-columns: .75fr 1.25fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .conversation-intro p {
+            max-width: 320px;
+            margin-top: 20px;
+            color: var(--muted);
+            font-size: 14.5px;
+            line-height: 1.6;
+        }
+
+        .conversation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-top: none;
+        }
+
+        .conversation-item {
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            box-shadow: 0 4px 16px -2px rgba(12, 28, 34, 0.03);
+            transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+
+        .conversation-item:hover {
+            border-color: rgba(13, 148, 136, 0.3);
+            box-shadow: 0 8px 24px -4px rgba(13, 148, 136, 0.08);
+        }
+
+        .conversation-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            width: 100%;
+            padding: 22px 24px;
+            border: 0;
+            color: var(--ink);
+            background: transparent;
+            text-align: left;
+            transition: background .2s ease;
+        }
+
+        .conversation-trigger:hover .conversation-question {
+            color: var(--accent);
+        }
+
+        .conversation-question {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.45;
+            transition: color .2s ease;
+        }
+
+        .conversation-question::before {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--muted);
+            content: "Customer";
+            font-size: 10px;
+            font-weight: 750;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .conversation-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--accent-soft);
+            flex: 0 0 auto;
+            color: var(--accent);
+            font-size: 18px;
+            font-weight: 600;
+            transition: transform .25s cubic-bezier(0.16, 1, 0.3, 1), background .2s ease;
+        }
+
+        .conversation-trigger[aria-expanded="true"] .conversation-arrow {
+            transform: rotate(45deg);
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .conversation-answer {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows .25s ease, opacity .2s ease, padding .25s ease;
+        }
+
+        .conversation-answer.open {
+            grid-template-rows: 1fr;
+            padding-bottom: 22px;
+            opacity: 1;
+        }
+
+        .conversation-answer-inner {
+            overflow: hidden;
+            min-height: 0;
+            padding: 0 24px;
+        }
+
+        .answer-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: 750;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .answer-label::before {
+            content: "✓";
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #ffffff;
+            font-size: 8px;
+            font-weight: 800;
+        }
+
+        .conversation-answer p {
+            max-width: 650px;
+            margin: 0;
+            padding: 16px 18px;
+            border-radius: 14px;
+            background: #f1f8f6;
+            border: 1px solid rgba(13, 148, 136, 0.15);
+            color: var(--ink);
+            font-size: 13.5px;
+            line-height: 1.65;
+        }
+
+        .conversation-answer.pending p {
+            font-style: italic;
+        }
+
+        .final-cta {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 68px 56px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #091a22 0%, #0d2e38 55%, #0a3d3c 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 70px -15px rgba(9, 26, 34, 0.4);
+            color: #ffffff;
+        }
+
+        .final-cta::after {
+            content: "";
+            position: absolute;
+            bottom: -60px;
+            right: -60px;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.28) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .final-cta h2 {
+            max-width: 610px;
+            margin-top: 0;
+            color: #ffffff;
+            font-size: clamp(30px, 3.8vw, 48px);
+        }
+
+        .final-cta-copy p {
+            max-width: 520px;
+            margin: 12px 0 0;
+            color: #a3c2bd;
+            font-size: 14.5px;
+            line-height: 1.6;
+        }
+
+        .final-cta-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 520px;
+            margin: 0;
+            color: #2dd4bf;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+            letter-spacing: .02em;
+            text-transform: uppercase;
+        }
+
+        .final-cta-actions {
+            display: flex;
+            flex: 0 0 auto;
+            flex-wrap: wrap;
+            gap: 12px;
+            z-index: 1;
+        }
+
+        .final-cta-actions .button-primary {
+            background: #ffffff;
+            color: var(--ink);
+            font-weight: 750;
+            min-height: 48px;
+            padding: 0 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .final-cta-actions .button-primary:hover {
+            background: #f0fdfa;
+            color: #0f766e;
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .site-footer {
+            padding: 36px 0 44px;
+            border-top: 1px solid var(--line);
+            background: rgba(248, 250, 249, 0.6);
+        }
+
+        .footer-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .footer-description {
+            margin: 9px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 26px;
+            color: var(--muted);
+            font-size: 12.5px;
+            font-weight: 550;
+        }
+
+        .footer-links a:hover {
+            color: var(--ink);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 50px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            z-index: 30;
+            max-width: calc(100% - 32px);
+            padding: 12px 20px;
+            border-radius: 999px;
+            color: #ffffff;
+            background: var(--ink);
+            font-size: 12.5px;
+            font-weight: 600;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, 15px);
+            box-shadow: 0 10px 30px rgba(12, 28, 34, 0.25);
+            transition: .25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .7s cubic-bezier(0.16, 1, 0.3, 1), transform .7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-copy,
+        .hero-note,
+        .section-subtitle,
+        .section-kicker,
+        .eyebrow,
+        .capability-intro p,
+        .conversation-intro p,
+        .demo-meta p {
+            color: rgba(255, 255, 255, 0.88);
+        }
+
+        @media (max-width: 900px) {
+            .capability-layout,
+            .conversation-layout {
+                gap: 48px;
+            }
+
+            .site-nav {
+                gap: 18px;
+                margin-right: 15px;
+            }
+
+            .steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .final-cta {
+                padding: 48px 36px;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .shell {
+                width: min(100% - 32px, 560px);
+            }
+
+            .nav-wrap {
+                min-height: 64px;
+            }
+
+            .menu-button {
+                display: block;
+            }
+
+            .nav-actions {
+                gap: 8px;
+            }
+
+            .nav-actions>.button {
+                display: none;
+            }
+
+            .nav-actions>.button.nav-cta {
+                display: inline-flex;
+                min-height: 38px;
+                padding: 0 14px;
+                font-size: 11.5px;
+            }
+
+            .site-nav {
+                position: absolute;
+                top: 64px;
+                right: 16px;
+                left: 16px;
+                display: none;
+                align-items: stretch;
+                flex-direction: column;
+                gap: 0;
+                margin: 0;
+                padding: 8px;
+                border: 1px solid var(--line);
+                border-radius: 18px;
+                background: rgba(255, 255, 255, .98);
+                box-shadow: var(--shadow);
+                backdrop-filter: blur(20px);
+            }
+
+            .site-header.nav-open .site-nav {
+                display: flex;
+            }
+
+            .site-nav a {
+                padding: 13px 16px;
+                border-radius: 10px;
+            }
+
+            .site-nav a:hover {
+                background: var(--accent-soft);
+            }
+
+            .hero {
+                padding: 72px 0 60px;
+            }
+
+            h1 {
+                max-width: 520px;
+                font-size: clamp(38px, 10vw, 54px);
+            }
+
+            .hero-copy {
+                font-size: 15.5px;
+            }
+
+            .section {
+                padding: 76px 0;
+            }
+
+            .section-heading,
+            .demo-cta-banner,
+            .final-cta {
+                display: block;
+            }
+
+            .demo-cta-banner {
+                padding: 28px 22px;
+            }
+
+            .demo-cta-action {
+                margin-top: 24px;
+            }
+
+            .demo-cta-action .button {
+                width: 100%;
+            }
+
+            .section-subtitle {
+                margin-top: 18px;
+            }
+
+            .demo-meta {
+                display: block;
+            }
+
+            .demo-context {
+                display: inline-flex;
+                margin-top: 14px;
+            }
+
+            .capability-layout,
+            .conversation-layout {
+                display: block;
+            }
+
+            .capability-intro p,
+            .conversation-intro p {
+                margin-bottom: 35px;
+            }
+
+            .capability-list {
+                grid-template-columns: 1fr;
+            }
+
+            .customization {
+                display: block;
+                padding: 30px 24px;
+            }
+
+            .customization p {
+                margin-top: 16px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .step+.step {
+                padding-left: 24px;
+                border-left: 1px solid var(--line);
+            }
+
+            .industries.single {
+                grid-template-columns: 1fr;
+            }
+
+            .industry {
+                min-height: auto;
+                padding: 26px 22px;
+            }
+
+            .final-cta-actions {
+                margin-top: 28px;
+            }
+
+            .footer-top {
+                display: block;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                margin-top: 26px;
+            }
+
+            .footer-bottom {
+                display: block;
+                margin-top: 35px;
+            }
+
+            .footer-bottom span {
+                display: block;
+                margin-top: 7px;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .demo-stage {
+                max-width: 320px;
+                border-radius: 30px;
+                border-width: 7px;
+            }
+
+            .final-cta-actions .button {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
+                animation: none !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body id="top">
+    <header class="site-header" id="site-header">
+        <div class="shell nav-wrap">
+            <a class="wordmark" href="#top" aria-label="RELIAagents home"><span>RELIA</span>agents</a>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="#capabilities" data-copy="navProduct">Product</a>
+                <a href="#how-it-works" data-copy="navHow">How it works</a>
+                <a href="#industries" data-copy="navIndustries">Industries</a>
+                <a href="#contact" data-copy="navContact">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <div class="language" aria-label="Language">
+                    <button type="button" class="active" data-lang="en">EN</button>
+                    <button type="button" data-lang="fr">FR</button>
+                </div>
+                <a class="button button-primary nav-cta" href="https://wa.me/212706613437" target="_blank" rel="noopener" data-copy="navCta">Test agent live</a>
+                <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false">
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="shell hero">
+            <div class="hero-content reveal">
+                <p class="eyebrow" data-copy="heroEyebrow">Customer service, handled</p>
+                <h1 data-copy="heroTitle">AI agents that handle your customers.</h1>
+                <p class="hero-copy" data-copy="heroDescription">RELIAagent answers questions, recommends products,
+                    takes orders, and hands off conversations when human help is needed.</p>
+                <p class="hero-note" data-copy="heroNote">Built for real customer conversations.</p>
+                <div class="hero-badges">
+                    <span class="hero-badge" data-copy="heroBadge1">⚡ 24/7 Instant replies</span>
+                    <span class="hero-badge" data-copy="heroBadge2">🇲🇦 Darija & French native</span>
+                    <span class="hero-badge" data-copy="heroBadge3">📦 Automated order collection</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-border" id="demo">
+            <div class="shell">
+                <div class="section-heading reveal">
+                    <div>
+                        <p class="section-kicker" data-copy="demoKicker">The product</p>
+                        <h2 data-copy="demoTitle">See it in action.</h2>
+                    </div>
+                    <p class="section-subtitle" data-copy="demoSubtitle">Watch the agent handle real customer
+                        conversations.</p>
+                </div>
+                <div class="demo-tabs reveal" role="tablist" aria-label="Choose a demo">
+                    <button class="demo-tab active" type="button" role="tab" aria-selected="true"
+                        data-demo="customerQuestions">
+                        <span>01</span><b data-copy="demoTab1">Customer questions</b>
+                    </button>
+                    <button class="demo-tab" type="button" role="tab" aria-selected="false" data-demo="orders">
+                        <span>02</span><b data-copy="demoTab2">Orders</b>
+                    </button>
+                </div>
+                <div class="demo-stage reveal" aria-live="polite">
+                    <video class="demo-video" preload="metadata" playsinline
+                        aria-label="RELIAagents demo video"></video>
+                    <div class="demo-placeholder">
+                        <div class="demo-placeholder-content">
+                            <div class="demo-placeholder-icon" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path
+                                        d="M7 4.6a1 1 0 0 0-1.5.86v9.08a1 1 0 0 0 1.5.86l7-4.54a1 1 0 0 0 0-1.72L7 4.6Z"
+                                        fill="currentColor" />
+                                </svg>
+                            </div>
+                            <strong data-copy="videoPlaceholder">Add the real demo recording here</strong>
+                            <small data-copy="videoPlaceholderDetail">The viewer is ready for your verified video
+                                source.</small>
+                        </div>
+                    </div>
+                    <button class="demo-play" type="button" aria-label="Play demo video">
+                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+                            <path
+                                d="M5.8 3.8a.8.8 0 0 0-1.2.69v8.02a.8.8 0 0 0 1.2.69l6.3-4.01a.8.8 0 0 0 0-1.38L5.8 3.8Z"
+                                fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="demo-meta reveal">
+                    <div>
+                        <h3 data-demo-title>Customer questions</h3>
+                        <p data-demo-description>Customers can ask about products, delivery, availability,
+                            specifications, and more.</p>
+                    </div>
+                    <span class="demo-context" data-copy="demoContext">Current demo: Electric Mobility</span>
+                </div>
+
+                <div class="demo-cta-banner reveal">
+                    <div class="demo-cta-copy">
+                        <h3 data-copy="ctaTryTitle">Want to try it yourself?</h3>
+                        <p data-copy="ctaTryDescription">Test the live agent and ask it anything about products, delivery,
+                            or orders — before building one for your business.</p>
+                        <span class="demo-store-note">Live demo — example store: ElectroMA.</span>
+                    </div>
+                    <div class="demo-cta-action">
+                        <a class="button button-primary" href="https://wa.me/212706613437?text=Hi" target="_blank" rel="noopener" data-copy="navCta">Test agent live</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-border" id="capabilities">
+            <div class="shell">
+                <div class="capability-layout">
+                    <div class="capability-intro reveal">
+                        <p class="section-kicker" data-copy="capabilityKicker">What it can do</p>
+                        <h2 data-copy="capabilityTitle">More than a chatbot.</h2>
+                        <p data-copy="capabilityIntro">RELIAagents connects customer questions to the information and
+                            actions your store already needs.</p>
+                    </div>
+                    <div class="capability-list reveal">
+                        <div class="capability"><span class="capability-index">01</span><span
+                                data-copy="capability1">Answer customer questions 24/7</span></div>
+                        <div class="capability"><span class="capability-index">02</span><span
+                                data-copy="capability2">Understand Darija, French, Arabic and English</span></div>
+                        <div class="capability"><span class="capability-index">03</span><span
+                                data-copy="capability3">Search the store's knowledge base</span></div>
+                        <div class="capability"><span class="capability-index">04</span><span
+                                data-copy="capability4">Recommend relevant products</span></div>
+                        <div class="capability"><span class="capability-index">05</span><span
+                                data-copy="capability5">Collect order information</span></div>
+                        <div class="capability"><span class="capability-index">06</span><span
+                                data-copy="capability6">Confirm orders before submission</span></div>
+                        <div class="capability"><span class="capability-index">07</span><span
+                                data-copy="capability7">Notify the store owner</span></div>
+                        <div class="capability"><span class="capability-index">08</span><span
+                                data-copy="capability8">Escalate when human help is needed</span></div>
+                    </div>
+                </div>
+                <div class="customization reveal">
+                    <h3 data-copy="customizationTitle">Your agent, your way.</h3>
+                    <p data-copy="customizationDescription">Choose its tone, response style, language, and behavior to
+                        match your brand — from brief and professional to friendly and conversational, including
+                        Latin-script or Arabic Darija.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-border" id="how-it-works">
+            <div class="shell">
+                <div class="section-heading reveal">
+                    <div>
+                        <p class="section-kicker" data-copy="howKicker">The workflow</p>
+                        <h2 data-copy="howTitle">From customer message to completed action.</h2>
+                    </div>
+                </div>
+                <div class="steps reveal">
+                    <div class="step">
+                        <span class="step-number">01</span>
+                        <h3 data-copy="step1Title">Message</h3>
+                        <p data-copy="step1Description">The customer sends a question through the store's messaging
+                            channel.</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">02</span>
+                        <h3 data-copy="step2Title">Understand</h3>
+                        <p data-copy="step2Description">The agent understands the request and uses the store's
+                            information.</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">03</span>
+                        <h3 data-copy="step3Title">Act</h3>
+                        <p data-copy="step3Description">It answers, recommends products, or collects the information
+                            needed for an order.</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">04</span>
+                        <h3 data-copy="step4Title">Handoff</h3>
+                        <p data-copy="step4Description">When necessary, it confirms the order or hands the conversation
+                            to the store owner.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-border" id="industries">
+            <div class="shell">
+                <div class="section-heading reveal">
+                    <div>
+                        <p class="section-kicker" data-copy="industryKicker">Where it starts</p>
+                        <h2 data-copy="industryTitle">Built for your business.</h2>
+                    </div>
+                </div>
+                <div class="industries single reveal">
+                    <article class="industry">
+                        <span class="industry-tag" data-copy="liveDemo">Live demo</span>
+                        <h3 data-copy="industryCurrent">Electric Mobility</h3>
+                        <p data-copy="industryCurrentDescription">AI customer service for trottinette and electric bike
+                            stores.</p>
+                        <a class="button button-secondary" href="#demo" style="margin-top: 18px;"
+                            data-copy="exploreDemo">Explore demo <span aria-hidden="true">↘</span></a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-border" id="conversations">
+            <div class="shell">
+                <div class="conversation-layout">
+                    <div class="conversation-intro reveal">
+                        <p class="section-kicker" data-copy="conversationKicker">Proof in the details</p>
+                        <h2 data-copy="conversationTitle">Real conversations. Real replies.</h2>
+                        <p data-copy="conversationIntro">A look at the kinds of customer questions the current Electric
+                            Mobility agent is built to handle.</p>
+                    </div>
+                    <div class="conversation-list reveal">
+                        <div class="conversation-item">
+                            <button class="conversation-trigger" type="button" aria-expanded="true"
+                                aria-controls="conversation-answer-1">
+                                <span class="conversation-question">Salam, 3ndkom chi trottinette f range dyal
+                                    3500dh?</span>
+                                <span class="conversation-arrow" aria-hidden="true">+</span>
+                            </button>
+                            <div class="conversation-answer open" id="conversation-answer-1" role="region"
+                                aria-live="polite">
+                                <div class="conversation-answer-inner">
+                                    <span class="answer-label" data-copy="verifiedOutput">Verified agent output</span>
+                                    <!-- verified real agent output — safe to ship -->
+                                    <p>Ahlan! Kayna Trottinette Urban X7 b 3,200 MAD, hadi mzyana w khfifa l
+                                        l'utilisation dyal kolla nhar. Fiha moteur 350W, katsal l 25 km/h, w kaddir 25
+                                        km b charge wa7da. Kayna f lk7al w lbyed.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="conversation-item">
+                            <button class="conversation-trigger" type="button" aria-expanded="false"
+                                aria-controls="conversation-answer-2">
+                                <span class="conversation-question">Kayn livraison l Agadir?</span>
+                                <span class="conversation-arrow" aria-hidden="true">+</span>
+                            </button>
+                            <div class="conversation-answer" id="conversation-answer-2" role="region"
+                                aria-live="polite">
+                                <div class="conversation-answer-inner">
+                                    <span class="answer-label" data-copy="verifiedOutput">Verified agent output</span>
+                                    <!-- verified real agent output — safe to ship -->
+                                    <p>Iyeh, kayn livraison l Agadir 😊 Agadir men l cities li fihom livraison sri3a
+                                        (2-3 ayyam), w livraison b free 3la ga3 les trottinettes w e-bikes. Wach bghiti
+                                        tchouf chi model?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="conversation-item">
+                            <button class="conversation-trigger" type="button" aria-expanded="false"
+                                aria-controls="conversation-answer-3">
+                                <span class="conversation-question">Kayn chi trottinette zwina l off-road?</span>
+                                <span class="conversation-arrow" aria-hidden="true">+</span>
+                            </button>
+                            <div class="conversation-answer" id="conversation-answer-3" role="region"
+                                aria-live="polite">
+                                <div class="conversation-answer-inner">
+                                    <span class="answer-label" data-copy="verifiedOutput">Verified agent output</span>
+                                    <!-- verified real agent output — safe to ship -->
+                                    <p>Ah iyeh khoya, 3andna wa7da zwina bzaf l off-road: *Trottinette MaxSpeed 8
+                                        Off-Road* 🛞<br><br>- Motor: 800W (dual motor option +600 MAD)<br>- Vitesse max:
+                                        45 km/h<br>- Autonomie: 50 km b charge wa7da<br>- Charge: 8 sa3at<br>- Poids
+                                        max: 130 kg<br>- Amortisseurs doubles + pneus larges l terrain<br>- Prix: 7,500
+                                        MAD<br>- Garantie: 12 chhor (moteur + batterie)<br>- Couleurs: Black w Camo
+                                        Green<br><br>Wach bghiti t3ref chi haja okhra 3liha?</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-border">
+            <div class="shell final-cta reveal" id="contact">
+                <div class="final-cta-copy">
+                    <h2 data-copy="ctaTitle">Ready to build an agent for your store?</h2>
+                    <p data-copy="ctaDescription">Let’s create an AI agent tailored to your products, customers, and way
+                        of working.</p>
+                </div>
+                <div class="final-cta-actions">
+                    <a class="button button-primary" href="https://wa.me/212678750917" target="_blank" rel="noopener" data-copy="ctaWhatsapp">Contact Oussama</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="shell">
+            <div class="footer-top">
+                <div>
+                    <a class="wordmark" href="#top"><span>RELIA</span>agents</a>
+                    <p class="footer-description" data-copy="footerDescription">AI agents for customer-facing
+                        businesses.</p>
+                </div>
+                <nav class="footer-links" aria-label="Footer navigation">
+                    <a href="#capabilities" data-copy="navProduct">Product</a>
+                    <a href="#how-it-works" data-copy="navHow">How it works</a>
+                    <a href="#industries" data-copy="navIndustries">Industries</a>
+                    <a href="#contact" data-copy="navContact">Contact</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <span>© <span id="year"></span> RELIAagents</span>
+                <span data-copy="footerNote">Built for real customer conversations.</span>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite"></div>
+
+    <script>
+        // Update this one value before launch; both WhatsApp links use it.
+        const WHATSAPP_NUMBER = "212";
+        const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
+
+        // Replace the empty strings with the two verified recording URLs/files.
+        // Keep demo configuration separate from the industry configuration below.
+        const demoSources = {
+            customerQuestions: "kb_questions.mp4", // Customer questions video source
+            orders: "ORDER_TAKING.mp4" // Orders video source
+        };
+
+        // This is the current real industry. Future industries intentionally have no demos.
+        const industryConfig = {
+            current: "Electric Mobility",
+            future: ["Car Rental", "Real Estate"]
+        };
+
+        const translations = {
+            en: {
+                navProduct: "Product", navHow: "How it works", navIndustries: "Industries", navContact: "Contact",
+                navCta: "Test agent live", heroEyebrow: "Customer service, handled",
+                heroTitle: "AI agents that handle your customers.",
+                heroDescription: "RELIAagent answers questions, recommends products, takes orders, and hands off conversations when human help is needed.",
+                heroNote: "Built for real customer conversations.",
+                heroBadge1: "⚡ 24/7 Instant replies", heroBadge2: "🇲🇦 Darija & French native", heroBadge3: "📦 Automated order collection",
+                demoKicker: "The product", demoTitle: "See it in action.",
+                demoSubtitle: "Watch the agent handle real customer conversations.",
+                demoTab1: "Customer questions", demoTab2: "Orders",
+                videoPlaceholder: "Add the real demo recording here",
+                videoPlaceholderDetail: "The viewer is ready for your verified video source.",
+                demoContext: "Current demo: Electric Mobility",
+                capabilityKicker: "What it can do", capabilityTitle: "More than a chatbot.",
+                capabilityIntro: "RELIAagents connects customer questions to the information and actions your store already needs.",
+                capability1: "Answer customer questions 24/7", capability2: "Understand Darija, French, Arabic and English",
+                capability3: "Search the store's knowledge base", capability4: "Recommend relevant products",
+                capability5: "Collect order information", capability6: "Confirm orders before submission",
+                capability7: "Notify the store owner", capability8: "Escalate when human help is needed",
+                customizationTitle: "Your agent, your way.",
+                customizationDescription: "Choose its tone, response style, language, and behavior to match your brand — from brief and professional to friendly and conversational, including Latin-script or Arabic Darija.",
+                howKicker: "The workflow", howTitle: "From customer message to completed action.",
+                step1Title: "Message", step1Description: "The customer sends a question through the store's messaging channel.",
+                step2Title: "Understand", step2Description: "The agent understands the request and uses the store's information.",
+                step3Title: "Act", step3Description: "It answers, recommends products, or collects the information needed for an order.",
+                step4Title: "Handoff", step4Description: "When necessary, it confirms the order or hands the conversation to the store owner.",
+                industryKicker: "Where it starts", industryTitle: "Built for your business.",
+                liveDemo: "Live demo", comingSoon: "Coming soon", industryCurrent: "Electric Mobility",
+                industryCurrentDescription: "AI customer service for trottinette and electric bike stores.",
+                exploreDemo: "Explore demo", industryFuture1: "Car Rental", industryFuture2: "Real Estate",
+                futureDescription: "A future RELIAagents industry.",
+                conversationKicker: "Proof in the details", conversationTitle: "Real conversations. Real replies.",
+                conversationIntro: "A look at the kinds of customer questions the current Electric Mobility agent is built to handle.",
+                verifiedOutput: "Verified agent output", needsVerification: "Needs verification",
+                pendingReply: "A verified reply from the agent will be added here.",
+                ctaTryTitle: "Want to try it yourself?",
+                ctaTryDescription: "Test the live agent and ask it anything about products, delivery, or orders — before building one for your business.",
+                ctaTitle: "Ready to build an agent for your store?",
+                ctaDescription: "Let’s create an AI agent tailored to your products, customers, and way of working.",
+                ctaWhatsapp: "Contact Oussama",
+                footerDescription: "AI agents for customer-facing businesses.",
+                footerNote: "Built for real customer conversations.", playDemo: "Play demo video",
+                toast: "Add the verified video source in the demo configuration."
+            },
+            fr: {
+                navProduct: "Produit", navHow: "Fonctionnement", navIndustries: "Secteurs", navContact: "Contact",
+                navCta: "Tester l'agent en direct", heroEyebrow: "Service client, simplifié",
+                heroTitle: "Des agents IA qui gèrent vos clients.",
+                heroDescription: "RELIAagents répond aux questions, recommande des produits, prend les commandes et vous transfère les conversations qui nécessitent une intervention humaine.",
+                heroNote: "Conçu pour de vraies conversations clients.",
+                heroBadge1: "⚡ Réponses 24/7 instantanées", heroBadge2: "🇲🇦 Darija & Français natif", heroBadge3: "📦 Prise de commandes automatique",
+                demoKicker: "Le produit", demoTitle: "Voir en action.",
+                demoSubtitle: "Voyez l'agent gérer de vraies conversations clients.",
+                demoTab1: "Questions clients", demoTab2: "Commandes",
+                videoPlaceholder: "Ajoutez la vraie démo vidéo ici",
+                videoPlaceholderDetail: "Le lecteur est prêt pour votre source vidéo vérifiée.",
+                demoContext: "Démo actuelle : mobilité électrique",
+                capabilityKicker: "Ce qu'il fait", capabilityTitle: "Plus qu'un chatbot.",
+                capabilityIntro: "RELIAagents relie les questions clients aux informations et actions dont votre boutique a besoin.",
+                capability1: "Répondre aux questions clients 24h/24, 7j/7", capability2: "Comprendre darija, français, arabe et anglais",
+                capability3: "Rechercher dans la base de connaissances", capability4: "Recommander les produits pertinents",
+                capability5: "Collecter les informations de commande", capability6: "Confirmer les commandes avant envoi",
+                capability7: "Notifier le propriétaire de la boutique", capability8: "Transférer quand une aide humaine est nécessaire",
+                customizationTitle: "Votre agent, à votre façon.",
+                customizationDescription: "Choisissez son ton, son style de réponse, sa langue et son comportement pour refléter votre marque — de concis et professionnel à chaleureux et conversationnel, en darija latine ou arabe.",
+                howKicker: "Le parcours", howTitle: "Du message client à l'action terminée.",
+                step1Title: "Message", step1Description: "Le client envoie une question via le canal de messagerie de la boutique.",
+                step2Title: "Comprendre", step2Description: "L'agent comprend la demande et utilise les informations de la boutique.",
+                step3Title: "Agir", step3Description: "Il répond, recommande des produits ou collecte les informations nécessaires à la commande.",
+                step4Title: "Relais", step4Description: "Si nécessaire, il confirme la commande ou transfère la conversation au propriétaire.",
+                industryKicker: "Le point de départ", industryTitle: "Pensé pour votre activité.",
+                liveDemo: "Démo disponible", comingSoon: "Bientôt disponible", industryCurrent: "Mobilité électrique",
+                industryCurrentDescription: "Service client IA pour les boutiques de trottinettes et vélos électriques.",
+                exploreDemo: "Voir la démo", industryFuture1: "Location de voitures", industryFuture2: "Immobilier",
+                futureDescription: "Un futur secteur RELIAagents.",
+                conversationKicker: "La preuve dans les détails", conversationTitle: "De vraies conversations. De vraies réponses.",
+                conversationIntro: "Un aperçu des questions que l'agent actuel pour la mobilité électrique est conçu pour traiter.",
+                verifiedOutput: "Réponse vérifiée de l'agent", needsVerification: "À vérifier",
+                pendingReply: "Une réponse vérifiée de l'agent sera ajoutée ici.",
+                ctaTryTitle: "Vous voulez l'essayer vous-même ?",
+                ctaTryDescription: "Testez l'agent en direct et posez-lui toutes vos questions sur les produits, la livraison ou les commandes — avant d'en créer un pour votre entreprise.",
+                ctaTitle: "Prêt à créer un agent pour votre boutique ?",
+                ctaDescription: "Créons un agent IA adapté à vos produits, vos clients et votre façon de travailler.",
+                ctaWhatsapp: "Contact Oussama",
+                footerDescription: "Des agents IA pour les entreprises en contact avec leurs clients.",
+                footerNote: "Conçu pour de vraies conversations clients.", playDemo: "Lire la vidéo de démo",
+                toast: "Ajoutez la source vidéo vérifiée dans la configuration des démos."
+            }
+        };
+
+        const demoConfigs = {
+            customerQuestions: {
+                title: { en: "Customer questions", fr: "Questions clients" },
+                description: {
+                    en: "Customers can ask about products, delivery, availability, specifications, and more.",
+                    fr: "Les clients peuvent demander des informations sur les produits, la livraison, la disponibilité, les caractéristiques et plus."
+                }
+            },
+            orders: {
+                title: { en: "Orders", fr: "Commandes" },
+                description: {
+                    en: "The agent collects order details, confirms the order, and can notify the store owner.",
+                    fr: "L'agent collecte les détails, confirme la commande et peut notifier le propriétaire de la boutique."
+                }
+            }
+        };
+
+        let lang = "en";
+        let activeDemo = "customerQuestions";
+        const header = document.getElementById("site-header");
+        const demoStage = document.querySelector(".demo-stage");
+        const demoVideo = document.querySelector(".demo-video");
+        const toast = document.querySelector(".toast");
+
+        function showToast() {
+            toast.textContent = translations[lang].toast;
+            toast.classList.add("show");
+            window.clearTimeout(window.__toastTimer);
+            window.__toastTimer = window.setTimeout(() => toast.classList.remove("show"), 3000);
+        }
+
+        function renderDemo() {
+            const config = demoConfigs[activeDemo];
+            document.querySelector("[data-demo-title]").textContent = config.title[lang];
+            document.querySelector("[data-demo-description]").textContent = config.description[lang];
+            document.querySelectorAll(".demo-tab").forEach((tab) => {
+                const active = tab.dataset.demo === activeDemo;
+                tab.classList.toggle("active", active);
+                tab.setAttribute("aria-selected", String(active));
+            });
+            const source = demoSources[activeDemo];
+            if (source) {
+                demoVideo.src = source;
+                demoVideo.controls = true;
+                demoVideo.classList.add("has-source");
+            } else {
+                demoVideo.removeAttribute("src");
+                demoVideo.controls = false;
+                demoVideo.classList.remove("has-source");
+            }
+        }
+
+        function render() {
+            const t = translations[lang];
+            document.documentElement.lang = lang;
+            document.querySelectorAll("[data-copy]").forEach((element) => {
+                const value = t[element.dataset.copy];
+                if (value) {
+                    if (value.includes("<")) {
+                        element.innerHTML = value;
+                    } else {
+                        element.textContent = value;
+                    }
+                }
+            });
+            document.querySelectorAll("[data-lang]").forEach((button) => {
+                button.classList.toggle("active", button.dataset.lang === lang);
+            });
+            document.querySelectorAll("[data-whatsapp]").forEach((link) => {
+                link.href = WHATSAPP_LINK;
+            });
+            document.querySelector(".demo-play").setAttribute("aria-label", t.playDemo);
+            renderDemo();
+        }
+
+        function setActiveDemo(nextDemo) {
+            if (nextDemo === activeDemo) return;
+            activeDemo = nextDemo;
+            demoStage.classList.add("is-switching");
+            window.setTimeout(() => {
+                renderDemo();
+                demoStage.classList.remove("is-switching");
+            }, 140);
+        }
+
+        document.querySelectorAll("[data-lang]").forEach((button) => {
+            button.addEventListener("click", () => {
+                lang = button.dataset.lang;
+                render();
+            });
+        });
+        document.querySelectorAll(".demo-tab").forEach((tab) => {
+            tab.addEventListener("click", () => setActiveDemo(tab.dataset.demo));
+        });
+        document.querySelector(".demo-play").addEventListener("click", () => {
+            if (demoVideo.src) {
+                demoVideo.play();
+            } else {
+                showToast();
+            }
+        });
+        document.querySelectorAll(".conversation-trigger").forEach((trigger) => {
+            trigger.addEventListener("click", () => {
+                const answer = document.getElementById(trigger.getAttribute("aria-controls"));
+                const open = trigger.getAttribute("aria-expanded") === "true";
+                document.querySelectorAll(".conversation-trigger").forEach((item) => item.setAttribute("aria-expanded", "false"));
+                document.querySelectorAll(".conversation-answer").forEach((item) => item.classList.remove("open"));
+                trigger.setAttribute("aria-expanded", String(!open));
+                answer.classList.toggle("open", !open);
+            });
+        });
+        document.querySelector(".menu-button").addEventListener("click", () => {
+            const open = header.classList.toggle("nav-open");
+            document.body.classList.toggle("menu-open", open);
+            document.querySelector(".menu-button").setAttribute("aria-expanded", String(open));
+            document.querySelector(".menu-button").setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        });
+        document.querySelectorAll(".site-nav a").forEach((link) => {
+            link.addEventListener("click", () => {
+                header.classList.remove("nav-open");
+                document.body.classList.remove("menu-open");
+                document.querySelector(".menu-button").setAttribute("aria-expanded", "false");
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: .12 });
+        document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+        document.getElementById("year").textContent = new Date().getFullYear();
+        render();
+    </script>
+</body>
+
+</html>

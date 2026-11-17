@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f8faf9" />
-    <title>RELIAagents — AI agents that handle your customers</title>
+    <title>OSADAagents — AI Agents for Customer Support & Orders</title>
+    <meta name="description" content="AI assistants for restaurants, retail stores, car washes, and other customer-facing businesses. Answer questions and collect customer requests 24/7." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -461,17 +462,7 @@
             font-size: 12.5px;
             font-weight: 500;
         }
-        .hero-copy,
-        .hero-note,
-        .section-subtitle,
-        .section-kicker,
-        .eyebrow,
-        .capability-intro p,
-        .conversation-intro p,
-        .demo-meta p {
-            color: rgba(255, 255, 255, 0.88);
-        }
-
+        .hero-copy, .hero-note { color: rgba(255, 255, 255, 0.88); }
 
         .hero-note::before {
             width: 6px;
@@ -552,6 +543,8 @@
             backdrop-filter: blur(12px);
             box-shadow: 0 2px 12px rgba(12, 28, 34, 0.04);
         }
+
+        .demo-label { margin: 0; padding: 14px 22px; font-size: 14px; font-weight: 700; color: var(--ink); }
 
         .demo-tab {
             display: flex;
@@ -956,7 +949,7 @@
 
         .steps {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 16px;
             border-top: none;
         }
@@ -1008,7 +1001,7 @@
         }
 
         .step p {
-            max-width: 220px;
+            max-width: 100%;
             margin-bottom: 0;
             color: var(--muted);
             font-size: 12.5px;
@@ -1016,13 +1009,16 @@
         }
 
         .industries {
-            border: none;
-        }
-
-        .industries.single {
             display: grid;
-            grid-template-columns: minmax(0, 720px);
-            border: none;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+        .industry-icon { display: block; font-size: 28px; margin-bottom: 24px; }
+        .industry-invitation { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 28px; }
+        .industry-invitation p { max-width: 600px; color: var(--muted); margin: 0; }
+        @media (max-width: 700px) {
+            .industries { grid-template-columns: 1fr; }
+            .industry-invitation { align-items: flex-start; flex-direction: column; }
         }
 
         .industry {
@@ -1234,6 +1230,11 @@
             line-height: 1.65;
         }
 
+        .transcript-message + .transcript-message { margin-top: 20px; }
+        .transcript-role { display: block; margin-bottom: 8px; color: var(--accent); font-size: 11px; font-weight: 750; text-transform: uppercase; letter-spacing: .08em; }
+        .transcript-message p { white-space: pre-wrap; overflow-wrap: anywhere; }
+        .transcript-message.customer p { background: #e8eff7; border-color: #cfdae8; }
+
         .conversation-answer.pending p {
             font-style: italic;
         }
@@ -1392,6 +1393,451 @@
             transform: translateY(0);
         }
 
+        .final-cta-actions .button-secondary {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            color: #ffffff;
+            font-weight: 700;
+            min-height: 48px;
+            padding: 0 24px;
+            backdrop-filter: blur(8px);
+        }
+
+        .final-cta-actions .button-secondary:hover {
+            background: rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: #ffffff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Pricing Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+            max-width: 980px;
+            margin: 0 auto;
+            align-items: stretch;
+        }
+
+        .pricing-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 44px 38px;
+            border-radius: 26px;
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 10px 30px -4px rgba(12, 28, 34, 0.05);
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(13, 148, 136, 0.4);
+            box-shadow: 0 20px 45px -8px rgba(13, 148, 136, 0.18);
+        }
+
+        .pricing-card.featured {
+            background: linear-gradient(140deg, #091b24 0%, #0e2b38 52%, #081720 100%);
+            border: 1px solid rgba(45, 212, 191, 0.35);
+            color: #ffffff;
+            box-shadow: 0 25px 65px -12px rgba(9, 26, 34, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+        }
+
+        .pricing-card.featured:hover {
+            border-color: rgba(45, 212, 191, 0.6);
+            box-shadow: 0 30px 75px -10px rgba(13, 148, 136, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: 22px;
+            right: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: rgba(13, 148, 136, 0.25);
+            border: 1px solid rgba(45, 212, 191, 0.4);
+            color: #5eead4;
+            font-size: 11px;
+            font-weight: 750;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+        }
+
+        .pricing-header h3 {
+            font-size: 24px;
+            letter-spacing: -.03em;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .pricing-card:not(.featured) .pricing-header h3 {
+            color: var(--ink);
+        }
+
+        .pricing-card.featured .pricing-header h3 {
+            color: #ffffff;
+        }
+
+        .pricing-desc {
+            font-size: 14px;
+            line-height: 1.55;
+            margin-bottom: 24px;
+        }
+
+        .pricing-card:not(.featured) .pricing-desc {
+            color: var(--muted);
+        }
+
+        .pricing-card.featured .pricing-desc {
+            color: #a4c4be;
+        }
+
+        .pricing-price-box {
+            padding: 20px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 28px;
+        }
+
+        .pricing-card.featured .pricing-price-box {
+            border-top-color: rgba(255, 255, 255, 0.1);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .pricing-price {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .pricing-amount {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -.04em;
+            line-height: 1;
+        }
+
+        .pricing-period {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .pricing-card:not(.featured) .pricing-amount {
+            color: var(--ink);
+        }
+
+        .pricing-card:not(.featured) .pricing-period {
+            color: var(--muted);
+        }
+
+        .pricing-card.featured .pricing-amount {
+            color: #ffffff;
+        }
+
+        .pricing-card.featured .pricing-period {
+            color: #9cb6b1;
+        }
+
+        .pricing-setup {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 13px;
+            font-weight: 650;
+        }
+
+        .pricing-card:not(.featured) .pricing-setup {
+            color: var(--accent);
+        }
+
+        .pricing-card.featured .pricing-setup {
+            color: #5eead4;
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+            flex-grow: 1;
+        }
+
+        .pricing-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 13.5px;
+            line-height: 1.5;
+        }
+
+        .pricing-feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(13, 148, 136, 0.15);
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .pricing-card.featured .pricing-feature-icon {
+            background: rgba(45, 212, 191, 0.2);
+            color: #5eead4;
+        }
+
+        .pricing-card:not(.featured) .pricing-feature {
+            color: var(--ink-secondary);
+        }
+
+        .pricing-card.featured .pricing-feature {
+            color: #d1e5e1;
+        }
+
+        .pricing-action .button {
+            width: 100%;
+            min-height: 48px;
+            font-size: 14px;
+        }
+
+        .pricing-disclaimers {
+            max-width: 820px;
+            margin: 36px auto 0;
+            padding: 20px 24px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(8px);
+            font-size: 12.5px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* Trust & Reliability */
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1060px;
+            margin: 0 auto;
+        }
+
+        .trust-card {
+            padding: 32px 28px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px -2px rgba(12, 28, 34, 0.03);
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+        }
+
+        .trust-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(13, 148, 136, 0.35);
+            box-shadow: 0 16px 36px -8px rgba(13, 148, 136, 0.14);
+            background: #ffffff;
+        }
+
+        .trust-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-size: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(13, 148, 136, 0.18);
+        }
+
+        .trust-card h3 {
+            font-size: 18px;
+            letter-spacing: -.03em;
+            font-weight: 750;
+            margin-bottom: 10px;
+            color: var(--ink);
+        }
+
+        .trust-card p {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        /* FAQ Section */
+        .faq-layout {
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            box-shadow: 0 4px 16px -2px rgba(12, 28, 34, 0.03);
+            transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(13, 148, 136, 0.3);
+            box-shadow: 0 8px 24px -4px rgba(13, 148, 136, 0.08);
+        }
+
+        .faq-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            width: 100%;
+            padding: 22px 26px;
+            border: 0;
+            color: var(--ink);
+            background: transparent;
+            text-align: left;
+            cursor: pointer;
+            transition: background .2s ease;
+        }
+
+        .faq-trigger:hover .faq-question {
+            color: var(--accent);
+        }
+
+        .faq-question {
+            font-size: 15.5px;
+            font-weight: 650;
+            line-height: 1.45;
+            transition: color .2s ease;
+        }
+
+        .faq-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--accent-soft);
+            flex: 0 0 auto;
+            color: var(--accent);
+            font-size: 18px;
+            font-weight: 600;
+            transition: transform .25s cubic-bezier(0.16, 1, 0.3, 1), background .2s ease;
+        }
+
+        .faq-trigger[aria-expanded="true"] .faq-arrow {
+            transform: rotate(45deg);
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .faq-answer {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows .25s ease, opacity .2s ease, padding .25s ease;
+        }
+
+        .faq-answer.open {
+            grid-template-rows: 1fr;
+            padding-bottom: 22px;
+            opacity: 1;
+        }
+
+        .faq-answer-inner {
+            overflow: hidden;
+            min-height: 0;
+            padding: 0 26px;
+        }
+
+        .faq-answer-inner p {
+            margin: 0;
+            padding: 16px 18px;
+            border-radius: 14px;
+            background: #f1f8f6;
+            border: 1px solid rgba(13, 148, 136, 0.15);
+            color: var(--ink);
+            font-size: 14px;
+            line-height: 1.65;
+        }
+
+        /* Billing Section */
+        .billing-card {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 38px 44px;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px -4px rgba(12, 28, 34, 0.04);
+        }
+
+        .billing-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .billing-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .billing-item-num {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .billing-item h4 {
+            font-size: 15px;
+            font-weight: 750;
+            color: var(--ink);
+            margin: 0;
+            letter-spacing: -.02em;
+        }
+
+        .billing-item p {
+            font-size: 13px;
+            line-height: 1.55;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .future-niches-note {
+            margin-top: 20px;
+            font-size: 13px;
+            font-weight: 550;
+        }
+
         .hero-copy,
         .hero-note,
         .section-subtitle,
@@ -1399,7 +1845,9 @@
         .eyebrow,
         .capability-intro p,
         .conversation-intro p,
-        .demo-meta p {
+        .demo-meta p,
+        .pricing-disclaimers,
+        .future-niches-note {
             color: rgba(255, 255, 255, 0.88);
         }
 
@@ -1415,6 +1863,19 @@
             }
 
             .steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 540px;
+            }
+
+            .trust-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .billing-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
@@ -1571,6 +2032,26 @@
                 padding: 26px 22px;
             }
 
+            .trust-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .billing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .billing-card {
+                padding: 26px 20px;
+            }
+
+            .pricing-card {
+                padding: 32px 24px;
+            }
+
+            .final-cta-actions .button-secondary {
+                width: 100%;
+            }
+
             .final-cta-actions {
                 margin-top: 28px;
             }
@@ -1621,21 +2102,81 @@
                 transform: none;
             }
         }
+    /* Targeted readability and layout fixes; retain the blue gradient. */
+        :root { --muted: #465b64; --accent-gradient: linear-gradient(135deg, #0f766e, #047857); }
+        body { background-image: linear-gradient(rgba(6,20,55,.34),rgba(6,20,55,.34)), radial-gradient(ellipse 65% 55% at 88% 18%,rgba(147,197,253,.5),transparent 70%), linear-gradient(125deg,#122874 0%,#1e40af 30%,#2563eb 58%,#60a5fa 82%,#93c5fd 100%); }
+        h1 { background: none; color: #fff; -webkit-text-fill-color: currentColor; }
+        .section-heading h2, .capability-intro h2, .conversation-intro h2, .demo-meta h3 { color: #fff; }
+        .section-subtitle, .section-kicker, .hero-copy, .hero-note, .eyebrow, .capability-intro p, .conversation-intro p, .demo-meta p, .pricing-disclaimers { color: #fff; }
+        .billing-card .section-kicker { color: var(--accent); }
+        .demo-tabs { background: #eef5f5; max-width: 100%; } .demo-tab { min-width: 0; } .demo-tab span { color: #53676e; } .demo-tab.active span { color: #7dd3c0; }
+        .pricing-grid { grid-template-columns: minmax(0,1fr); max-width: 620px; margin-inline: auto; }
+        .pricing-heading { justify-content: center; text-align: center; }
+        .monitoring-card { margin-top: 32px; } .monitoring-card .dashboard-details { margin-top: 16px; }
+        .channel-description { color: #fff; line-height: 1.65; margin: 24px 0; max-width: 860px; }
+        html[lang="fr"] .conversation-question::before { content: "Client"; }
+        .answer-label::before { content: "i"; } #contact { scroll-margin-top: 90px; }
+        .final-cta-copy, .final-cta-actions { min-width: 0; } .final-cta-actions { flex: 0 1 330px; flex-direction: column; }
+        .final-cta-actions .button { text-align: center; padding: 14px 20px; height: auto; }
+        [hidden] { display: none !important; } .site-footer { background: #eef4f6; }
+        .button:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid #fbbf24; outline-offset: 4px; }
+        @media (max-width:1050px) and (min-width:721px) { .nav-wrap { flex-wrap: wrap; padding-block: 12px; gap: 14px; } .site-nav { order: 3; width: 100%; justify-content: center; margin: 0; } }
+        @media (max-width:720px) { .nav-wrap { flex-wrap: wrap; gap: 10px; padding-block: 10px; position: relative; } .site-nav { top: 100%; } .nav-actions { flex-wrap: wrap; justify-content: flex-end; } .demo-tab { padding: 10px; font-size: 11px; } .final-cta-actions { width: 100%; } .final-cta { padding: 32px 22px; } .hero-content, .step, .capability { min-width: 0; } }
+        @media (max-width:430px) { .nav-wrap { justify-content: center; } .nav-actions { width: 100%; justify-content: center; } #contact, .section { scroll-margin-top: 130px; } }
+        /* Compact single package: equal setup and monthly prices. */
+        #pricing .pricing-grid { max-width: 740px; }
+        #pricing .pricing-heading { margin-bottom: 30px; }
+        #pricing .pricing-card { padding: 28px; justify-content: flex-start; }
+        #pricing .pricing-desc { margin-bottom: 18px; color: #bfd8d3; }
+        .pricing-totals { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin-bottom: 10px; padding: 18px; border: 1px solid rgba(94,234,212,.23); border-radius: 13px; background: rgba(94,234,212,.07); }
+        .pricing-total { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; min-width: 0; }
+        #pricing .pricing-total:first-child .pricing-amount { font-weight: 600; }
+        .pricing-structure { color: #bfd8d3; font-size: 12px; line-height: 1.55; margin: 0 0 20px; text-align: center; }
+        #pricing .pricing-amount { font-size: 34px; line-height: 1.1; }
+        .pricing-label { color: #a7e6d9; font-size: 13px; font-weight: 650; line-height: 1.4; }
+        #pricing .pricing-features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; flex-grow: 0; padding-top: 20px; margin-bottom: 24px; border-top: 1px solid rgba(94,234,212,.2); }
+        #pricing .pricing-feature { gap: 9px; min-width: 0; }
+        #pricing .pricing-disclaimers { margin: 14px 0 0; padding: 0; border: 0; border-radius: 0; background: none; backdrop-filter: none; color: #bfd8d3; font-size: 11.5px; line-height: 1.55; }
+        @media (max-width: 540px) {
+            #pricing .pricing-card { padding: 22px 18px; }
+            #pricing .pricing-features { grid-template-columns: minmax(0, 1fr); gap: 12px; padding-top: 18px; margin-bottom: 20px; }
+            .pricing-totals { padding: 16px 12px; gap: 10px; }
+            #pricing .pricing-amount { font-size: 30px; }
+            .pricing-label { font-size: 12px; }
+        }
+        .contact-heading { margin: 0 0 4px; color: #fff; font-size: 20px; letter-spacing: -.03em; }
+        .contact-method { width: 100%; padding: 16px 18px; border: 1px solid rgba(255,255,255,.18); border-radius: 16px; background: rgba(255,255,255,.06); transition: background .2s; }
+        .contact-method:hover { background: rgba(255,255,255,.1); }
+        .contact-link { display: flex; align-items: center; justify-content: space-between; color: #fff; font-size: 16px; font-weight: 750; text-decoration: none; min-height: 32px; }
+        .contact-link > span:last-child { color: #7dd3c0; font-size: 22px; }
+        .contact-detail { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 8px; }
+        .contact-value { color: #c8dedb; font-size: 13px; overflow-wrap: anywhere; user-select: text; min-width: 0; }
+        .copy-contact { flex-shrink: 0; border: 1px solid rgba(125,211,192,.3); border-radius: 8px; padding: 8px 10px; min-height: 36px; background: rgba(125,211,192,.1); color: #b6f5e5; font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .copy-contact:hover { background: rgba(125,211,192,.22); }
+        .copy-contact:focus-visible, .contact-link:focus-visible, .contact-demo-link:focus-visible { outline: 2px solid #7dd3c0; outline-offset: 4px; }
+        .contact-copy-status { margin: 0; color: #b6f5e5; font-size: 12px; }
+        .contact-copy-status:empty { display: none; }
+        .contact-demo { width: 100%; border-top: 1px solid rgba(255,255,255,.16); padding-top: 20px; margin-top: 6px; }
+        .contact-demo p { color: #a3c2bd; font-size: 13px; margin: 0 0 10px; }
+        .contact-demo-link { display: inline-block; color: #b6f5e5; font-size: 14px; font-weight: 700; padding: 5px 0; }
+        @media (max-width: 720px) { .final-cta-actions { flex-basis: auto; } .contact-method { padding: 14px; } }
     </style>
 </head>
 
 <body id="top">
     <header class="site-header" id="site-header">
         <div class="shell nav-wrap">
-            <a class="wordmark" href="#top" aria-label="RELIAagents home"><span>RELIA</span>agents</a>
-            <nav class="site-nav" aria-label="Main navigation">
+            <a class="wordmark" href="#top" data-aria-copy="homeLabel" aria-label="OSADAagents home"><span>OSADA</span>agents</a>
+            <nav class="site-nav" data-aria-copy="mainNavigation" aria-label="Main navigation">
                 <a href="#capabilities" data-copy="navProduct">Product</a>
-                <a href="#how-it-works" data-copy="navHow">How it works</a>
-                <a href="#industries" data-copy="navIndustries">Industries</a>
+                <a href="#how-it-works" data-copy="navProcess">Process</a>
+                <a href="#pricing" data-copy="navPricing">Pricing</a>
+                <a href="#trust" data-copy="navTrust">Trust</a>
+                <a href="#faq" data-copy="navFaq">FAQ</a>
                 <a href="#contact" data-copy="navContact">Contact</a>
             </nav>
             <div class="nav-actions">
-                <div class="language" aria-label="Language">
+                <div class="language" data-aria-copy="languageLabel" aria-label="Language">
                     <button type="button" class="active" data-lang="en">EN</button>
                     <button type="button" data-lang="fr">FR</button>
                 </div>
@@ -1650,15 +2191,15 @@
     <main>
         <section class="shell hero">
             <div class="hero-content reveal">
-                <p class="eyebrow" data-copy="heroEyebrow">Customer service, handled</p>
-                <h1 data-copy="heroTitle">AI agents that handle your customers.</h1>
-                <p class="hero-copy" data-copy="heroDescription">RELIAagent answers questions, recommends products,
-                    takes orders, and hands off conversations when human help is needed.</p>
-                <p class="hero-note" data-copy="heroNote">Built for real customer conversations.</p>
+                <p class="eyebrow" data-copy="heroEyebrow">Customer service, automated</p>
+                <h1 data-copy="heroTitle">Your customers have questions. Your AI agent is ready.</h1>
+                <p class="hero-copy" data-copy="heroDescription">OSADA Agents builds AI assistants for restaurants, retail stores, car washes, and other customer-facing businesses — helping answer questions, handle requests, and guide customers to the next step.</p>
+                <div class="hero-actions"><a class="button button-primary" href="#contact" data-copy="getStarted">Discuss your business</a><a class="button button-secondary" href="#demo" data-copy="watchDemo">See a demo</a></div>
+                <p class="hero-note" data-copy="heroNote">Your industry. Your information. Your way of serving customers.</p>
                 <div class="hero-badges">
-                    <span class="hero-badge" data-copy="heroBadge1">⚡ 24/7 Instant replies</span>
-                    <span class="hero-badge" data-copy="heroBadge2">🇲🇦 Darija & French native</span>
-                    <span class="hero-badge" data-copy="heroBadge3">📦 Automated order collection</span>
+                    <span class="hero-badge" data-copy="heroBadge1">⚡ Around-the-clock assistance</span>
+                    <span class="hero-badge" data-copy="heroBadge2">🌍 Multilingual support</span>
+                    <span class="hero-badge" data-copy="heroBadge3">💬 Customer request collection</span>
                 </div>
             </div>
         </section>
@@ -1667,24 +2208,15 @@
             <div class="shell">
                 <div class="section-heading reveal">
                     <div>
-                        <p class="section-kicker" data-copy="demoKicker">The product</p>
+                        <p class="section-kicker" data-copy="demoKicker">One example, many possibilities</p>
                         <h2 data-copy="demoTitle">See it in action.</h2>
                     </div>
-                    <p class="section-subtitle" data-copy="demoSubtitle">Watch the agent handle real customer
-                        conversations.</p>
+                    <p class="section-subtitle" data-copy="demoSubtitle">See an assistant configured for a retail business. Your agent would use your business information, services, and agreed workflows.</p>
                 </div>
-                <div class="demo-tabs reveal" role="tablist" aria-label="Choose a demo">
-                    <button class="demo-tab active" type="button" role="tab" aria-selected="true"
-                        data-demo="customerQuestions">
-                        <span>01</span><b data-copy="demoTab1">Customer questions</b>
-                    </button>
-                    <button class="demo-tab" type="button" role="tab" aria-selected="false" data-demo="orders">
-                        <span>02</span><b data-copy="demoTab2">Orders</b>
-                    </button>
-                </div>
+                <div class="demo-tabs reveal"><p class="demo-label" data-copy="demoTab1">Recorded agent demo</p></div>
                 <div class="demo-stage reveal" aria-live="polite">
                     <video class="demo-video" preload="metadata" playsinline
-                        aria-label="RELIAagents demo video"></video>
+                        data-aria-copy="videoLabel" aria-label="OSADAagents demo video"></video>
                     <div class="demo-placeholder">
                         <div class="demo-placeholder-content">
                             <div class="demo-placeholder-icon" aria-hidden="true">
@@ -1695,8 +2227,7 @@
                                 </svg>
                             </div>
                             <strong data-copy="videoPlaceholder">Add the real demo recording here</strong>
-                            <small data-copy="videoPlaceholderDetail">The viewer is ready for your verified video
-                                source.</small>
+                            <small data-copy="videoPlaceholderDetail">The viewer is ready for your verified video source.</small>
                         </div>
                     </div>
                     <button class="demo-play" type="button" aria-label="Play demo video">
@@ -1709,19 +2240,17 @@
                 </div>
                 <div class="demo-meta reveal">
                     <div>
-                        <h3 data-demo-title>Customer questions</h3>
-                        <p data-demo-description>Customers can ask about products, delivery, availability,
-                            specifications, and more.</p>
+                        <h3 data-demo-title>Recorded agent demo</h3>
+                        <p data-demo-description>Follow a recorded conversation with our retail demo agent.</p>
                     </div>
-                    <span class="demo-context" data-copy="demoContext">Current demo: Electric Mobility</span>
+                    <span class="demo-context" data-copy="demoContext">Example use case · Retail</span>
                 </div>
 
                 <div class="demo-cta-banner reveal">
                     <div class="demo-cta-copy">
                         <h3 data-copy="ctaTryTitle">Want to try it yourself?</h3>
-                        <p data-copy="ctaTryDescription">Test the live agent and ask it anything about products, delivery,
-                            or orders — before building one for your business.</p>
-                        <span class="demo-store-note">Live demo — example store: ElectroMA.</span>
+                        <p data-copy="ctaTryDescription">Explore product questions and order requests in our free retail demo on WhatsApp. Private testing of your own customized assistant follows the setup deposit.</p>
+                        <span class="demo-store-note" data-copy="demoStoreNote">Retail demo · ElectroMA. One example of a tailored assistant, not a limit on the businesses we serve.</span>
                     </div>
                     <div class="demo-cta-action">
                         <a class="button button-primary" href="https://wa.me/212706613437?text=Hi" target="_blank" rel="noopener" data-copy="navCta">Test agent live</a>
@@ -1736,33 +2265,32 @@
                     <div class="capability-intro reveal">
                         <p class="section-kicker" data-copy="capabilityKicker">What it can do</p>
                         <h2 data-copy="capabilityTitle">More than a chatbot.</h2>
-                        <p data-copy="capabilityIntro">RELIAagents connects customer questions to the information and
-                            actions your store already needs.</p>
+                        <p data-copy="capabilityIntro">OSADA Agents connects customer questions to the information and workflows your business needs.</p>
                     </div>
                     <div class="capability-list reveal">
                         <div class="capability"><span class="capability-index">01</span><span
                                 data-copy="capability1">Answer customer questions 24/7</span></div>
                         <div class="capability"><span class="capability-index">02</span><span
-                                data-copy="capability2">Understand Darija, French, Arabic and English</span></div>
+                                data-copy="capability2">Support English, French, Arabic, and more</span></div>
                         <div class="capability"><span class="capability-index">03</span><span
-                                data-copy="capability3">Search the store's knowledge base</span></div>
+                                data-copy="capability3">Use your business knowledge base</span></div>
                         <div class="capability"><span class="capability-index">04</span><span
-                                data-copy="capability4">Recommend relevant products</span></div>
+                                data-copy="capability4">Guide customers through products and services</span></div>
                         <div class="capability"><span class="capability-index">05</span><span
-                                data-copy="capability5">Collect order information</span></div>
+                                data-copy="capability5">Collect customer details and requests</span></div>
                         <div class="capability"><span class="capability-index">06</span><span
-                                data-copy="capability6">Confirm orders before submission</span></div>
+                                data-copy="capability6">Confirm requests before notifying the owner</span></div>
                         <div class="capability"><span class="capability-index">07</span><span
-                                data-copy="capability7">Notify the store owner</span></div>
+                                data-copy="capability7">Notify your team</span></div>
                         <div class="capability"><span class="capability-index">08</span><span
-                                data-copy="capability8">Escalate when human help is needed</span></div>
+                                data-copy="capability8">Flag requests that need human help</span></div>
                     </div>
                 </div>
-                <div class="customization reveal">
+                <article class="monitoring-card trust-card reveal"><h3  data-copy="dashboardTitle">Conversation Monitoring Dashboard</h3><p  data-copy="dashboardDescription">Stay informed with a dedicated dashboard where you can review customer conversations handled by your AI assistant. Conversations refresh automatically approximately every 7 seconds, helping you keep track of customer inquiries and order requests.</p><p class="dashboard-details" data-copy="dashboardDetails">Password-protected access • WhatsApp-style interface • Conversations organized by customer • Incoming and outgoing messages • Manual refresh. Read-only: you cannot send messages from this dashboard.</p></article>
+<p class="channel-description reveal" data-copy="channelDescription">Available for WhatsApp, with additional messaging channels and website integration options discussed during consultation. The package covers one agreed channel; additional integrations may require a separate quote.</p>
+<div class="customization reveal">
                     <h3 data-copy="customizationTitle">Your agent, your way.</h3>
-                    <p data-copy="customizationDescription">Choose its tone, response style, language, and behavior to
-                        match your brand — from brief and professional to friendly and conversational, including
-                        Latin-script or Arabic Darija.</p>
+                    <p data-copy="customizationDescription">Choose its tone, response style, language, and behavior to match your brand — from brief and professional to friendly and conversational, tailored to your international customer base.</p>
                 </div>
             </div>
         </section>
@@ -1771,34 +2299,68 @@
             <div class="shell">
                 <div class="section-heading reveal">
                     <div>
-                        <p class="section-kicker" data-copy="howKicker">The workflow</p>
-                        <h2 data-copy="howTitle">From customer message to completed action.</h2>
+                        <p class="section-kicker" data-copy="processKicker">The onboarding process</p>
+                        <h2 data-copy="processTitle">How we get you started.</h2>
                     </div>
+                    <p class="section-subtitle" data-copy="processSubtitle">A straightforward, 5-step path to deploy an AI agent tailored to your business.</p>
                 </div>
                 <div class="steps reveal">
                     <div class="step">
                         <span class="step-number">01</span>
-                        <h3 data-copy="step1Title">Message</h3>
-                        <p data-copy="step1Description">The customer sends a question through the store's messaging
-                            channel.</p>
+                        <h3 data-copy="step1Title">Free Consultation</h3>
+                        <p data-copy="step1Description">We learn about your business, current support volume, and specific customer needs.</p>
                     </div>
                     <div class="step">
                         <span class="step-number">02</span>
-                        <h3 data-copy="step2Title">Understand</h3>
-                        <p data-copy="step2Description">The agent understands the request and uses the store's
-                            information.</p>
+                        <h3 data-copy="step2Title">Business Information</h3>
+                        <p data-copy="step2Description">You share your products or services, prices, business policies, FAQs, and brand guidelines.</p>
                     </div>
                     <div class="step">
                         <span class="step-number">03</span>
-                        <h3 data-copy="step3Title">Act</h3>
-                        <p data-copy="step3Description">It answers, recommends products, or collects the information
-                            needed for an order.</p>
+                        <h3 data-copy="step3Title">Agent Customization</h3>
+                        <p data-copy="step3Description">After scope agreement and the 50% setup deposit, we configure your assistant’s knowledge, tone, and agreed workflows.</p>
                     </div>
                     <div class="step">
                         <span class="step-number">04</span>
-                        <h3 data-copy="step4Title">Handoff</h3>
-                        <p data-copy="step4Description">When necessary, it confirms the order or hands the conversation
-                            to the store owner.</p>
+                        <h3 data-copy="step4Title">Testing & Approval</h3>
+                        <p data-copy="step4Description">Privately test your customized assistant and request agreed adjustments. Approve it before paying the remaining setup balance.</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">05</span>
+                        <h3 data-copy="step5Title">Launch & Support</h3>
+                        <p data-copy="step5Description">After approval and final setup payment, your assistant launches on the agreed channel with standard support. Your setup fee includes the first 30 days of service from launch; monthly billing begins after those 30 days.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-border" id="pricing">
+            <div class="shell">
+                <div class="section-heading reveal pricing-heading"><h2 data-copy="pricingTitle">Pricing</h2></div>
+                <div class="pricing-grid reveal">
+                    <div class="pricing-card featured">
+                        <div class="pricing-header">
+                            <h3 data-copy="packageTitle">AI Customer Assistant</h3>
+                            <p class="pricing-desc" data-copy="packageDescription">Answers customer questions using your business information, product or service details, FAQs, and policies.</p>
+                        </div>
+                        <div class="pricing-totals">
+                            <div class="pricing-total"><span class="pricing-amount" data-copy="packageSetup">$350</span><span class="pricing-label" data-copy="setupLabel">one-time setup</span></div>
+
+                            <div class="pricing-total"><strong class="pricing-amount" data-copy="packageMonthly">$99/month</strong></div>
+                        </div>
+                        <p class="pricing-structure" data-copy="pricingStructure">Your setup fee includes the first 30 days of service from launch. $99/month thereafter.</p>
+                        <ul class="pricing-features">
+                            <li class="pricing-feature"><span class="pricing-feature-icon" aria-hidden="true">✓</span><span data-copy="packageF1">Product &amp; service guidance</span></li>
+                            <li class="pricing-feature"><span class="pricing-feature-icon" aria-hidden="true">✓</span><span data-copy="packageF2">Customer details &amp; request collection</span></li>
+                            <li class="pricing-feature"><span class="pricing-feature-icon" aria-hidden="true">✓</span><span data-copy="packageF3">Customer confirmation before submission</span></li>
+                            <li class="pricing-feature"><span class="pricing-feature-icon" aria-hidden="true">✓</span><span data-copy="packageF4">Store owner notifications</span></li>
+                            <li class="pricing-feature"><span class="pricing-feature-icon" aria-hidden="true">✓</span><span data-copy="packageF5">Human escalation</span></li>
+                            <li class="pricing-feature"><span class="pricing-feature-icon" aria-hidden="true">✓</span><span data-copy="packageF6">Conversation monitoring dashboard</span></li>
+                            <li class="pricing-feature"><span class="pricing-feature-icon" aria-hidden="true">✓</span><span data-copy="packageF7">One messaging channel</span></li>
+                            <li class="pricing-feature"><span class="pricing-feature-icon" aria-hidden="true">✓</span><span data-copy="packageF8">Maintenance & standard support</span></li>
+                        </ul>
+                        <div class="pricing-action"><a class="button button-primary" href="#contact" data-copy="getStarted">Discuss your business</a></div>
+                        <p class="pricing-disclaimers" data-copy="pricingDisclaimers">Starting prices in USD. Final scope, usage limits, and any additional costs are agreed before purchase.</p>
                     </div>
                 </div>
             </div>
@@ -1808,19 +2370,60 @@
             <div class="shell">
                 <div class="section-heading reveal">
                     <div>
-                        <p class="section-kicker" data-copy="industryKicker">Where it starts</p>
-                        <h2 data-copy="industryTitle">Built for your business.</h2>
+                        <p class="section-kicker" data-copy="industryKicker">Who we help</p>
+                        <h2 data-copy="industryTitle">Built for businesses like yours.</h2>
                     </div>
                 </div>
-                <div class="industries single reveal">
-                    <article class="industry">
-                        <span class="industry-tag" data-copy="liveDemo">Live demo</span>
-                        <h3 data-copy="industryCurrent">Electric Mobility</h3>
-                        <p data-copy="industryCurrentDescription">AI customer service for trottinette and electric bike
-                            stores.</p>
-                        <a class="button button-secondary" href="#demo" style="margin-top: 18px;"
-                            data-copy="exploreDemo">Explore demo <span aria-hidden="true">↘</span></a>
-                    </article>
+                <div class="industries reveal">
+<article class="industry"><span class="industry-icon" aria-hidden="true">☕</span><h3 data-copy="industryRestaurant">Restaurants &amp; cafés</h3><p data-copy="industryRestaurantDescription">Menu questions, opening hours, and order inquiries — help customers decide before they visit or order.</p></article>
+<article class="industry"><span class="industry-icon" aria-hidden="true">🛍️</span><h3 data-copy="industryCurrent">Retail &amp; online stores</h3><p data-copy="industryCurrentDescription">Product questions, availability through configured data sources, and order requests — online or in store.</p></article>
+<article class="industry"><span class="industry-icon" aria-hidden="true">🚗</span><h3 data-copy="industryCarWash">Car washes &amp; auto services</h3><p data-copy="industryCarWashDescription">Explain service packages and pricing, answer common questions, and collect booking inquiries for your team.</p></article>
+<article class="industry"><span class="industry-icon" aria-hidden="true">💬</span><h3 data-copy="industryOther">Your business</h3><p data-copy="industryOtherDescription">An assistant tailored to your information, services, and customer requests. We define the right workflows together.</p></article>
+</div><div class="industry-invitation reveal"><p data-copy="industryNote">Don’t see your industry? Let’s explore what an AI assistant could handle for your business.</p><a class="button button-secondary" href="#contact" data-copy="industryContact">Tell us about your business</a></div>
+                
+            </div>
+        </section>
+
+        <section class="section section-border" id="trust">
+            <div class="shell">
+                <div class="section-heading reveal">
+                    <div>
+                        <p class="section-kicker" data-copy="trustKicker">Reliability by design</p>
+                        <h2 data-copy="trustTitle">AI you and your customers can trust.</h2>
+                    </div>
+                    <p class="section-subtitle" data-copy="trustSubtitle">Built around your business information, agreed workflows, and human oversight.</p>
+                </div>
+                <div class="trust-grid reveal">
+                    <div class="trust-card">
+                        <div class="trust-icon" aria-hidden="true">📚</div>
+                        <h3 data-copy="trust1Title">Grounded in Your Knowledge</h3>
+                        <p data-copy="trust1Desc">The agent answers using the verified product or service details, FAQs, and business policies you provide.</p>
+                    </div>
+                    <div class="trust-card">
+                        <div class="trust-icon" aria-hidden="true">🔄</div>
+                        <h3 data-copy="trust2Title">Human Escalation</h3>
+                        <p data-copy="trust2Desc">Sensitive or complex requests can be flagged for your team through the agreed escalation process. Your team handles the follow-up.</p>
+                    </div>
+                    <div class="trust-card">
+                        <div class="trust-icon" aria-hidden="true">🛡️</div>
+                        <h3 data-copy="trust3Title">You Retain Control</h3>
+                        <p data-copy="trust3Desc">Your team remains responsible for business decisions, payments, refunds, and order fulfillment. AI answers may need review.</p>
+                    </div>
+                    <div class="trust-card">
+                        <div class="trust-icon" aria-hidden="true">🧪</div>
+                        <h3 data-copy="trust4Title">Test Before You Launch</h3>
+                        <p data-copy="trust4Desc">After the initial deposit, privately test your customized assistant and request agreed corrections before approval and launch.</p>
+                    </div>
+                    <div class="trust-card">
+                        <div class="trust-icon" aria-hidden="true">🛠️</div>
+                        <h3 data-copy="trust5Title">Maintenance and standard support</h3>
+                        <p data-copy="trust5Desc">Ongoing technical maintenance, issue investigation, and agreed small configuration or knowledge adjustments.</p>
+                    </div>
+                    <div class="trust-card">
+                        <div class="trust-icon" aria-hidden="true">📋</div>
+                        <h3 data-copy="trust6Title">Clear Scope & Terms</h3>
+                        <p data-copy="trust6Desc">We agree on functionality, usage allowances, and any additional costs before work begins.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1829,66 +2432,262 @@
             <div class="shell">
                 <div class="conversation-layout">
                     <div class="conversation-intro reveal">
-                        <p class="section-kicker" data-copy="conversationKicker">Proof in the details</p>
-                        <h2 data-copy="conversationTitle">Real conversations. Real replies.</h2>
-                        <p data-copy="conversationIntro">A look at the kinds of customer questions the current Electric
-                            Mobility agent is built to handle.</p>
+                        <p class="section-kicker" data-copy="conversationKicker">Retail demo conversations</p>
+                        <h2 data-copy="conversationTitle">A look at customer conversations.</h2>
+                        <p data-copy="conversationIntro">Conversations from our retail demo: product recommendations, an order request, and a delivery question. Messages are shown in their original English in both language versions. Your assistant is tailored to your own business.</p>
                     </div>
                     <div class="conversation-list reveal">
                         <div class="conversation-item">
-                            <button class="conversation-trigger" type="button" aria-expanded="true"
+                            <button class="conversation-trigger" type="button" aria-expanded="false"
                                 aria-controls="conversation-answer-1">
-                                <span class="conversation-question">Salam, 3ndkom chi trottinette f range dyal
-                                    3500dh?</span>
+                                <span class="conversation-question" lang="en">I'm looking for an electric scooter for daily commuting. My budget is $500. What would you recommend?</span>
                                 <span class="conversation-arrow" aria-hidden="true">+</span>
                             </button>
-                            <div class="conversation-answer open" id="conversation-answer-1" role="region"
+                            <div class="conversation-answer" id="conversation-answer-1" role="region"
                                 aria-live="polite">
                                 <div class="conversation-answer-inner">
-                                    <span class="answer-label" data-copy="verifiedOutput">Verified agent output</span>
-                                    <!-- verified real agent output — safe to ship -->
-                                    <p>Ahlan! Kayna Trottinette Urban X7 b 3,200 MAD, hadi mzyana w khfifa l
-                                        l'utilisation dyal kolla nhar. Fiha moteur 350W, katsal l 25 km/h, w kaddir 25
-                                        km b charge wa7da. Kayna f lk7al w lbyed.</p>
-                                </div>
+<div class="transcript-message agent" lang="en"><span class="transcript-role">Agent</span><p>With a $500 budget you have two great options for commuting 👇
+
+<strong>Scooter Rider Pro 500 — 480 USD</strong>
+500W • 32 km/h • 40 km range • suspension for uneven roads • 120 kg load • 12-month warranty (motor + battery) • Black, Grey, Red
+
+<strong>Scooter Urban X7 — 320 USD</strong>
+350W • 25 km/h • 25 km range • folds in 3 seconds • lightweight 12.5 kg • 6-month warranty • Black, White
+
+For daily commuting, I'd lean toward the <strong>Rider Pro 500</strong> if you want more range, speed, and a longer warranty — and it still fits your budget. The <strong>Urban X7</strong> is the better pick if you need something light to carry and don't ride far.
+
+Both fit a first-time customer promo (ELECTRO10, 10% off scooter prices) — codes must be applied at checkout, and I can't apply them myself.
+
+Want more details on either one, or would you like to place an order?</p></div>
+</div>
                             </div>
                         </div>
                         <div class="conversation-item">
                             <button class="conversation-trigger" type="button" aria-expanded="false"
                                 aria-controls="conversation-answer-2">
-                                <span class="conversation-question">Kayn livraison l Agadir?</span>
+                                <span class="conversation-question" lang="en">I'd like to order the Rider Pro 500 in black. How do I proceed?</span>
                                 <span class="conversation-arrow" aria-hidden="true">+</span>
                             </button>
                             <div class="conversation-answer" id="conversation-answer-2" role="region"
                                 aria-live="polite">
                                 <div class="conversation-answer-inner">
-                                    <span class="answer-label" data-copy="verifiedOutput">Verified agent output</span>
-                                    <!-- verified real agent output — safe to ship -->
-                                    <p>Iyeh, kayn livraison l Agadir 😊 Agadir men l cities li fihom livraison sri3a
-                                        (2-3 ayyam), w livraison b free 3la ga3 les trottinettes w e-bikes. Wach bghiti
-                                        tchouf chi model?</p>
-                                </div>
+<div class="transcript-message agent" lang="en"><span class="transcript-role">Agent</span><p>Great choice! The <strong>Scooter Rider Pro 500</strong> in Black is available — 500W, 40 km range, 32 km/h — priced at <strong>480 USD</strong> (12-month warranty on motor + battery).
+
+To place your order, I just need these details:
+
+1. Full name
+2. Full delivery address (street) and city
+3. Payment method (Visa/Mastercard, PayPal, or bank transfer — cash on delivery isn't offered)</p></div>
+<div class="transcript-message customer" lang="en"><span class="transcript-role">Customer</span><p>Alex
+Calle Lun 12. Madird
+Paypal .</p></div>
+<div class="transcript-message agent" lang="en"><span class="transcript-role">Agent</span><p>Thanks, Alex! Here's your order summary:
+
+Name: Alex
+Product: Scooter Rider Pro 500
+Color: Black
+Quantity: 1
+Address: Calle Lun 12, Madrid, Spain
+Payment: PayPal
+Product price: 480 USD
+
+Shall I confirm this order and send it to our team?</p></div>
+<div class="transcript-message customer" lang="en"><span class="transcript-role">Customer</span><p>yes</p></div>
+<div class="transcript-message agent" lang="en"><span class="transcript-role">Agent</span><p>Done, Alex! ✅ Your order has been sent to our team — they'll confirm it shortly via WhatsApp, along with the shipping cost to Madrid and the PayPal payment instructions.
+
+Anything else I can help you with?</p></div>
+</div>
                             </div>
                         </div>
                         <div class="conversation-item">
                             <button class="conversation-trigger" type="button" aria-expanded="false"
                                 aria-controls="conversation-answer-3">
-                                <span class="conversation-question">Kayn chi trottinette zwina l off-road?</span>
+                                <span class="conversation-question" lang="en">Do you deliver to Marrakech?</span>
                                 <span class="conversation-arrow" aria-hidden="true">+</span>
                             </button>
                             <div class="conversation-answer" id="conversation-answer-3" role="region"
                                 aria-live="polite">
                                 <div class="conversation-answer-inner">
-                                    <span class="answer-label" data-copy="verifiedOutput">Verified agent output</span>
-                                    <!-- verified real agent output — safe to ship -->
-                                    <p>Ah iyeh khoya, 3andna wa7da zwina bzaf l off-road: *Trottinette MaxSpeed 8
-                                        Off-Road* 🛞<br><br>- Motor: 800W (dual motor option +600 MAD)<br>- Vitesse max:
-                                        45 km/h<br>- Autonomie: 50 km b charge wa7da<br>- Charge: 8 sa3at<br>- Poids
-                                        max: 130 kg<br>- Amortisseurs doubles + pneus larges l terrain<br>- Prix: 7,500
-                                        MAD<br>- Garantie: 12 chhor (moteur + batterie)<br>- Couleurs: Black w Camo
-                                        Green<br><br>Wach bghiti t3ref chi haja okhra 3liha?</p>
+<div class="transcript-message agent" lang="en"><span class="transcript-role">Agent</span><p>Yes, we deliver to Marrakech ✅</p></div>
+</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-border" id="faq">
+            <div class="shell">
+                <div class="section-heading reveal">
+                    <div>
+                        <p class="section-kicker" data-copy="faqKicker">Got questions?</p>
+                        <h2 data-copy="faqTitle">Frequently asked questions.</h2>
+                    </div>
+                    <p class="section-subtitle" data-copy="faqSubtitle">Answers about your assistant, implementation, and monthly service.</p>
+                </div>
+                <div class="faq-layout reveal">
+                    <div class="faq-list">
+                        <!-- FAQ 1 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-ans-1">
+                                <span class="faq-question" data-copy="faq1Q">What is the difference between an AI chatbot and an AI agent?</span>
+                                <span class="faq-arrow" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-1" role="region" aria-live="polite">
+                                <div class="faq-answer-inner">
+                                    <p data-copy="faq1A">A scripted chatbot follows predefined conversation paths. Our AI assistant uses your business information to answer questions and can perform configured tasks, such as stock lookups and collecting order requests.</p>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- FAQ 2 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-ans-2">
+                                <span class="faq-question" data-copy="faq2Q">Can the agent answer questions about my products or services?</span>
+                                <span class="faq-arrow" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-2" role="region" aria-live="polite">
+                                <div class="faq-answer-inner">
+                                    <p data-copy="faq2A">Yes. We configure the assistant with your product or service details, prices, opening hours, and FAQs. Its answers use the information you provide, with human review for exceptions.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 3 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-ans-3">
+                                <span class="faq-question" data-copy="faq3Q">Can it collect order requests automatically?</span>
+                                <span class="faq-arrow" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-3" role="region" aria-live="polite">
+                                <div class="faq-answer-inner">
+                                    <p data-copy="faq3A">Yes. The assistant collects customer and order details, asks the customer to confirm the request, and notifies the owner. Payment processing, fulfillment, and inventory updates are separate and require implemented, agreed integrations.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 4 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-ans-4">
+                                <span class="faq-question" data-copy="faq4Q">Can the AI assistant replace customer support staff?</span>
+                                <span class="faq-arrow" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-4" role="region" aria-live="polite">
+                                <div class="faq-answer-inner">
+                                    <p data-copy="faq4A">Our AI assistants can handle many routine customer inquiries automatically, reducing the need for manual support. However, human oversight remains important for exceptional situations, sensitive requests, and order fulfillment. You remain in control of your business.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 5 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-ans-5">
+                                <span class="faq-question" data-copy="faq5Q">How long does implementation take?</span>
+                                <span class="faq-arrow" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-5" role="region" aria-live="polite">
+                                <div class="faq-answer-inner">
+                                    <p data-copy="faq5A">A typical implementation may take approximately 5–15 business days, depending on your requirements and integrations. We'll review your needs and provide a clear timeline before development begins.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 6 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-ans-6">
+                                <span class="faq-question" data-copy="faq6Q">Can I update my services and business information?</span>
+                                <span class="faq-arrow" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-6" role="region" aria-live="polite">
+                                <div class="faq-answer-inner">
+                                    <p data-copy="faq6A">Yes. You can request updates to products, services, prices, FAQs, and business policies within the agreed maintenance scope.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 7 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-ans-7">
+                                <span class="faq-question" data-copy="faq7Q">What does the monthly subscription include?</span>
+                                <span class="faq-arrow" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-7" role="region" aria-live="polite">
+                                <div class="faq-answer-inner">
+                                    <p data-copy="faq7A">Maintenance and standard support include ongoing technical maintenance, issue investigation, and agreed small configuration or knowledge-base adjustments. Information updates are handled through this service, rather than automatic live synchronization. Major new features, integrations, additional channels, or major workflow changes require a separate quote.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 8 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-ans-8">
+                                <span class="faq-question" data-copy="faq8Q">Are there any additional costs?</span>
+                                <span class="faq-arrow" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-8" role="region" aria-live="polite">
+                                <div class="faq-answer-inner">
+                                    <p data-copy="faq8A">Your monthly subscription covers the agreed services and maintenance. Some messaging platforms may charge usage-based fees depending on your customer volume. Any applicable costs and usage limits are explained before you subscribe.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 9 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-ans-9">
+                                <span class="faq-question" data-copy="faq9Q">Can I cancel the monthly subscription?</span>
+                                <span class="faq-arrow" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-9" role="region" aria-live="polite">
+                                <div class="faq-answer-inner">
+                                    <p data-copy="faq9A">Cancellation terms and any notice period are discussed and included in your service agreement before you subscribe.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 10 -->
+                        <div class="faq-item">
+                            <button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-ans-10">
+                                <span class="faq-question" data-copy="faq10Q">Can I test my customized AI assistant before launch?</span>
+                                <span class="faq-arrow" aria-hidden="true">+</span>
+                            </button>
+                            <div class="faq-answer" id="faq-ans-10" role="region" aria-live="polite">
+                                <div class="faq-answer-inner">
+                                    <p data-copy="faq10A">Yes. After the initial setup deposit, we'll configure your assistant and provide a private testing phase. You can review its performance and request agreed adjustments before paying the remaining setup balance and launching the service.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-border" id="billing">
+            <div class="shell">
+                <div class="billing-card reveal">
+                    <p class="section-kicker" data-copy="billingKicker">Billing & payments</p>
+                    <h2 data-copy="billingTitle" style="font-size: clamp(26px, 3.2vw, 36px); margin-bottom: 8px;">Straightforward payment terms.</h2>
+                    <p class="billing-desc" data-copy="billingSubtitle" style="color: var(--muted); font-size: 14.5px; margin: 0 0 16px;">For the $350 setup package: $175 before development, $175 after testing and approval. Payment methods are confirmed in your proposal.</p>
+                    <div class="billing-grid">
+                        <div class="billing-item">
+                            <span class="billing-item-num">01</span>
+                            <h4 data-copy="billingItem1Title">Discuss & agree</h4>
+                            <p data-copy="billingItem1Desc">We review your requirements and provide a proposal with the scope, usage allowances, and fees.</p>
+                        </div>
+                        <div class="billing-item">
+                            <span class="billing-item-num">02</span>
+                            <h4 data-copy="billingItem2Title">50% to begin</h4>
+                            <p data-copy="billingItem2Desc">After scope agreement, pay $175 before we build and configure your customized assistant.</p>
+                        </div>
+                        <div class="billing-item">
+                            <span class="billing-item-num">03</span>
+                            <h4 data-copy="billingItem3Title">Test & approve</h4>
+                            <p data-copy="billingItem3Desc">Privately test the assistant and request agreed corrections. Pay the remaining $175 after approval and before production launch.</p>
+                        </div>
+                        <div class="billing-item">
+                            <span class="billing-item-num">04</span>
+                            <h4 data-copy="billingItem4Title">Launch & subscribe</h4>
+                            <p data-copy="billingItem4Desc">Your setup fee includes the first 30 days of service from launch. After that, the subscription is $99/month, billed in advance. Amounts reflect the starting package; your proposal confirms the agreed price.</p>
                         </div>
                     </div>
                 </div>
@@ -1898,12 +2697,24 @@
         <section class="section section-border">
             <div class="shell final-cta reveal" id="contact">
                 <div class="final-cta-copy">
-                    <h2 data-copy="ctaTitle">Ready to build an agent for your store?</h2>
-                    <p data-copy="ctaDescription">Let’s create an AI agent tailored to your products, customers, and way
-                        of working.</p>
+                    <h2 data-copy="ctaTitle">Ready to build an agent for your business?</h2>
+                    <p data-copy="ctaDescription">From restaurants and retail stores to car washes and beyond — let’s discuss your customers, services, and everyday requests.</p>
                 </div>
                 <div class="final-cta-actions">
-                    <a class="button button-primary" href="https://wa.me/212678750917" target="_blank" rel="noopener" data-copy="ctaWhatsapp">Contact Oussama</a>
+                    <h3 class="contact-heading" data-copy="contactHeading">Contact us</h3>
+                    <div class="contact-method">
+                        <a class="contact-link" data-business-whatsapp href="https://wa.me/212678750917" target="_blank" rel="noopener"><span data-copy="ctaWhatsapp">WhatsApp</span><span aria-hidden="true">↗</span></a>
+                        <div class="contact-detail"><span class="contact-value">+212 678 750 917</span><button type="button" class="copy-contact" data-copy-value="+212678750917" data-copy="copyContact" data-aria-copy="copyPhone" aria-label="Copy phone number">Copy</button></div>
+                    </div>
+                    <div class="contact-method">
+                        <a class="contact-link" data-business-email href="mailto:osadaagents@gmail.com"><span data-copy="ctaEmail">Email</span><span aria-hidden="true">↗</span></a>
+                        <div class="contact-detail"><span class="contact-value">osadaagents@gmail.com</span><button type="button" class="copy-contact" data-copy-value="osadaagents@gmail.com" data-copy="copyContact" data-aria-copy="copyEmail" aria-label="Copy email address">Copy</button></div>
+                    </div>
+                    <p class="contact-copy-status" role="status" aria-live="polite"></p>
+                    <div class="contact-demo">
+                        <p data-copy="contactDemoPrompt">Want to try the agent first?</p>
+                        <a class="contact-demo-link" href="https://wa.me/212706613437?text=Hi" target="_blank" rel="noopener"><span data-copy="ctaTestLive">Test the agent live</span><span aria-hidden="true"> →</span></a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1913,19 +2724,20 @@
         <div class="shell">
             <div class="footer-top">
                 <div>
-                    <a class="wordmark" href="#top"><span>RELIA</span>agents</a>
-                    <p class="footer-description" data-copy="footerDescription">AI agents for customer-facing
-                        businesses.</p>
+                    <a class="wordmark" href="#top"><span>OSADA</span>agents</a>
+                    <p class="footer-description" data-copy="footerDescription">AI assistants for customer-facing businesses.</p>
                 </div>
-                <nav class="footer-links" aria-label="Footer navigation">
+                <nav class="footer-links" data-aria-copy="footerNavigation" aria-label="Footer navigation">
                     <a href="#capabilities" data-copy="navProduct">Product</a>
-                    <a href="#how-it-works" data-copy="navHow">How it works</a>
-                    <a href="#industries" data-copy="navIndustries">Industries</a>
+                    <a href="#how-it-works" data-copy="navProcess">Process</a>
+                    <a href="#pricing" data-copy="navPricing">Pricing</a>
+                    <a href="#trust" data-copy="navTrust">Trust</a>
+                    <a href="#faq" data-copy="navFaq">FAQ</a>
                     <a href="#contact" data-copy="navContact">Contact</a>
                 </nav>
             </div>
             <div class="footer-bottom">
-                <span>© <span id="year"></span> RELIAagents</span>
+                <span>© <span id="year"></span> OSADAagents</span>
                 <span data-copy="footerNote">Built for real customer conversations.</span>
             </div>
         </div>
@@ -1934,133 +2746,361 @@
     <div class="toast" role="status" aria-live="polite"></div>
 
     <script>
-        // Update this one value before launch; both WhatsApp links use it.
-        const WHATSAPP_NUMBER = "212";
-        const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
+        // Keep business inquiries separate from the live demo.
+        const BUSINESS_WHATSAPP = "https://wa.me/212678750917";
+        // Business contact email shared by both language versions.
+        const VERIFIED_BUSINESS_EMAIL = "osadaagents@gmail.com";
 
-        // Replace the empty strings with the two verified recording URLs/files.
-        // Keep demo configuration separate from the industry configuration below.
-        const demoSources = {
-            customerQuestions: "kb_questions.mp4", // Customer questions video source
-            orders: "ORDER_TAKING.mp4" // Orders video source
-        };
+        // Single recording shared by both language versions.
+        const demoSource = "KB_questions.mp4";
 
-        // This is the current real industry. Future industries intentionally have no demos.
-        const industryConfig = {
-            current: "Electric Mobility",
-            future: ["Car Rental", "Real Estate"]
-        };
-
+        // Demo transcripts remain in their original English; surrounding copy is localized.
         const translations = {
-            en: {
-                navProduct: "Product", navHow: "How it works", navIndustries: "Industries", navContact: "Contact",
-                navCta: "Test agent live", heroEyebrow: "Customer service, handled",
-                heroTitle: "AI agents that handle your customers.",
-                heroDescription: "RELIAagent answers questions, recommends products, takes orders, and hands off conversations when human help is needed.",
-                heroNote: "Built for real customer conversations.",
-                heroBadge1: "⚡ 24/7 Instant replies", heroBadge2: "🇲🇦 Darija & French native", heroBadge3: "📦 Automated order collection",
-                demoKicker: "The product", demoTitle: "See it in action.",
-                demoSubtitle: "Watch the agent handle real customer conversations.",
-                demoTab1: "Customer questions", demoTab2: "Orders",
-                videoPlaceholder: "Add the real demo recording here",
-                videoPlaceholderDetail: "The viewer is ready for your verified video source.",
-                demoContext: "Current demo: Electric Mobility",
-                capabilityKicker: "What it can do", capabilityTitle: "More than a chatbot.",
-                capabilityIntro: "RELIAagents connects customer questions to the information and actions your store already needs.",
-                capability1: "Answer customer questions 24/7", capability2: "Understand Darija, French, Arabic and English",
-                capability3: "Search the store's knowledge base", capability4: "Recommend relevant products",
-                capability5: "Collect order information", capability6: "Confirm orders before submission",
-                capability7: "Notify the store owner", capability8: "Escalate when human help is needed",
-                customizationTitle: "Your agent, your way.",
-                customizationDescription: "Choose its tone, response style, language, and behavior to match your brand — from brief and professional to friendly and conversational, including Latin-script or Arabic Darija.",
-                howKicker: "The workflow", howTitle: "From customer message to completed action.",
-                step1Title: "Message", step1Description: "The customer sends a question through the store's messaging channel.",
-                step2Title: "Understand", step2Description: "The agent understands the request and uses the store's information.",
-                step3Title: "Act", step3Description: "It answers, recommends products, or collects the information needed for an order.",
-                step4Title: "Handoff", step4Description: "When necessary, it confirms the order or hands the conversation to the store owner.",
-                industryKicker: "Where it starts", industryTitle: "Built for your business.",
-                liveDemo: "Live demo", comingSoon: "Coming soon", industryCurrent: "Electric Mobility",
-                industryCurrentDescription: "AI customer service for trottinette and electric bike stores.",
-                exploreDemo: "Explore demo", industryFuture1: "Car Rental", industryFuture2: "Real Estate",
-                futureDescription: "A future RELIAagents industry.",
-                conversationKicker: "Proof in the details", conversationTitle: "Real conversations. Real replies.",
-                conversationIntro: "A look at the kinds of customer questions the current Electric Mobility agent is built to handle.",
-                verifiedOutput: "Verified agent output", needsVerification: "Needs verification",
-                pendingReply: "A verified reply from the agent will be added here.",
-                ctaTryTitle: "Want to try it yourself?",
-                ctaTryDescription: "Test the live agent and ask it anything about products, delivery, or orders — before building one for your business.",
-                ctaTitle: "Ready to build an agent for your store?",
-                ctaDescription: "Let’s create an AI agent tailored to your products, customers, and way of working.",
-                ctaWhatsapp: "Contact Oussama",
-                footerDescription: "AI agents for customer-facing businesses.",
-                footerNote: "Built for real customer conversations.", playDemo: "Play demo video",
-                toast: "Add the verified video source in the demo configuration."
-            },
-            fr: {
-                navProduct: "Produit", navHow: "Fonctionnement", navIndustries: "Secteurs", navContact: "Contact",
-                navCta: "Tester l'agent en direct", heroEyebrow: "Service client, simplifié",
-                heroTitle: "Des agents IA qui gèrent vos clients.",
-                heroDescription: "RELIAagents répond aux questions, recommande des produits, prend les commandes et vous transfère les conversations qui nécessitent une intervention humaine.",
-                heroNote: "Conçu pour de vraies conversations clients.",
-                heroBadge1: "⚡ Réponses 24/7 instantanées", heroBadge2: "🇲🇦 Darija & Français natif", heroBadge3: "📦 Prise de commandes automatique",
-                demoKicker: "Le produit", demoTitle: "Voir en action.",
-                demoSubtitle: "Voyez l'agent gérer de vraies conversations clients.",
-                demoTab1: "Questions clients", demoTab2: "Commandes",
-                videoPlaceholder: "Ajoutez la vraie démo vidéo ici",
-                videoPlaceholderDetail: "Le lecteur est prêt pour votre source vidéo vérifiée.",
-                demoContext: "Démo actuelle : mobilité électrique",
-                capabilityKicker: "Ce qu'il fait", capabilityTitle: "Plus qu'un chatbot.",
-                capabilityIntro: "RELIAagents relie les questions clients aux informations et actions dont votre boutique a besoin.",
-                capability1: "Répondre aux questions clients 24h/24, 7j/7", capability2: "Comprendre darija, français, arabe et anglais",
-                capability3: "Rechercher dans la base de connaissances", capability4: "Recommander les produits pertinents",
-                capability5: "Collecter les informations de commande", capability6: "Confirmer les commandes avant envoi",
-                capability7: "Notifier le propriétaire de la boutique", capability8: "Transférer quand une aide humaine est nécessaire",
-                customizationTitle: "Votre agent, à votre façon.",
-                customizationDescription: "Choisissez son ton, son style de réponse, sa langue et son comportement pour refléter votre marque — de concis et professionnel à chaleureux et conversationnel, en darija latine ou arabe.",
-                howKicker: "Le parcours", howTitle: "Du message client à l'action terminée.",
-                step1Title: "Message", step1Description: "Le client envoie une question via le canal de messagerie de la boutique.",
-                step2Title: "Comprendre", step2Description: "L'agent comprend la demande et utilise les informations de la boutique.",
-                step3Title: "Agir", step3Description: "Il répond, recommande des produits ou collecte les informations nécessaires à la commande.",
-                step4Title: "Relais", step4Description: "Si nécessaire, il confirme la commande ou transfère la conversation au propriétaire.",
-                industryKicker: "Le point de départ", industryTitle: "Pensé pour votre activité.",
-                liveDemo: "Démo disponible", comingSoon: "Bientôt disponible", industryCurrent: "Mobilité électrique",
-                industryCurrentDescription: "Service client IA pour les boutiques de trottinettes et vélos électriques.",
-                exploreDemo: "Voir la démo", industryFuture1: "Location de voitures", industryFuture2: "Immobilier",
-                futureDescription: "Un futur secteur RELIAagents.",
-                conversationKicker: "La preuve dans les détails", conversationTitle: "De vraies conversations. De vraies réponses.",
-                conversationIntro: "Un aperçu des questions que l'agent actuel pour la mobilité électrique est conçu pour traiter.",
-                verifiedOutput: "Réponse vérifiée de l'agent", needsVerification: "À vérifier",
-                pendingReply: "Une réponse vérifiée de l'agent sera ajoutée ici.",
-                ctaTryTitle: "Vous voulez l'essayer vous-même ?",
-                ctaTryDescription: "Testez l'agent en direct et posez-lui toutes vos questions sur les produits, la livraison ou les commandes — avant d'en créer un pour votre entreprise.",
-                ctaTitle: "Prêt à créer un agent pour votre boutique ?",
-                ctaDescription: "Créons un agent IA adapté à vos produits, vos clients et votre façon de travailler.",
-                ctaWhatsapp: "Contact Oussama",
-                footerDescription: "Des agents IA pour les entreprises en contact avec leurs clients.",
-                footerNote: "Conçu pour de vraies conversations clients.", playDemo: "Lire la vidéo de démo",
-                toast: "Ajoutez la source vidéo vérifiée dans la configuration des démos."
-            }
-        };
+    "en": {
+        "navProduct": "Product",
+        "navProcess": "Process",
+        "navPricing": "Pricing",
+        "navTrust": "Trust",
+        "navFaq": "FAQ",
+        "navContact": "Contact",
+        "navCta": "Test agent live",
+        "heroEyebrow": "Customer service, automated",
+        "heroTitle": "Your customers have questions. Your AI agent is ready.",
+        "heroDescription": "OSADA Agents builds AI assistants for restaurants, retail stores, car washes, and other customer-facing businesses — helping answer questions, handle requests, and guide customers to the next step.",
+        "heroNote": "Your industry. Your information. Your way of serving customers.",
+        "heroBadge1": "⚡ Around-the-clock assistance",
+        "heroBadge2": "🌍 Multilingual support",
+        "heroBadge3": "💬 Customer request collection",
+        "demoKicker": "One example, many possibilities",
+        "demoTitle": "See it in action.",
+        "demoSubtitle": "See an assistant configured for a retail business. Your agent would use your business information, services, and agreed workflows.",
+        "demoTab1": "Recorded agent demo",
+        "videoPlaceholder": "Add the real demo recording here",
+        "videoPlaceholderDetail": "The viewer is ready for your verified video source.",
+        "demoContext": "Example use case · Retail",
+        "capabilityKicker": "What it can do",
+        "capabilityTitle": "More than a chatbot.",
+        "capabilityIntro": "OSADA Agents connects customer questions to the information and workflows your business needs.",
+        "capability1": "Answer customer questions 24/7",
+        "capability2": "Support English, French, Arabic, and more",
+        "capability3": "Use your business knowledge base",
+        "capability4": "Guide customers through products and services",
+        "capability5": "Collect customer details and requests",
+        "capability6": "Confirm requests before notifying the owner",
+        "capability7": "Notify your team",
+        "capability8": "Flag requests that need human help",
+        "customizationTitle": "Your agent, your way.",
+        "customizationDescription": "Choose its tone, response style, language, and behavior to match your brand — from brief and professional to friendly and conversational, tailored to your international customer base.",
+        "processKicker": "The onboarding process",
+        "processTitle": "How we get you started.",
+        "processSubtitle": "A straightforward, 5-step path to deploy an AI agent tailored to your business.",
+        "step1Title": "Free Consultation",
+        "step1Description": "We learn about your business, current support volume, and specific customer needs.",
+        "step2Title": "Business Information",
+        "step2Description": "You share your products or services, prices, business policies, FAQs, and brand guidelines.",
+        "step3Title": "Agent Customization",
+        "step3Description": "After scope agreement and the 50% setup deposit, we configure your assistant’s knowledge, tone, and agreed workflows.",
+        "step4Title": "Testing & Approval",
+        "step4Description": "Privately test your customized assistant and request agreed adjustments. Approve it before paying the remaining setup balance.",
+        "step5Title": "Launch & Support",
+        "step5Description": "After approval and final setup payment, your assistant launches on the agreed channel with standard support. Your setup fee includes the first 30 days of service from launch; monthly billing begins after those 30 days.",
+        "pricingTitle": "Pricing",
+        "perMonth": "/ month",
+        "pricingDisclaimers": "Starting prices in USD. Final scope, usage limits, and any additional costs are agreed before purchase.",
+        "industryKicker": "Who we help",
+        "industryTitle": "Built for businesses like yours.",
+        "liveDemo": "Live demo",
+        "industryCurrent": "Retail & online stores",
+        "industryCurrentDescription": "Product questions, availability through configured data sources, and order requests — online or in store.",
+        "exploreDemo": "Explore demo",
+        "trustKicker": "Reliability by design",
+        "trustTitle": "AI you and your customers can trust.",
+        "trustSubtitle": "Built around your business information, agreed workflows, and human oversight.",
+        "trust1Title": "Grounded in Your Knowledge",
+        "trust1Desc": "The agent answers using the verified product or service details, FAQs, and business policies you provide.",
+        "trust2Title": "Human Escalation",
+        "trust2Desc": "Sensitive or complex requests can be flagged for your team through the agreed escalation process. Your team handles the follow-up.",
+        "trust3Title": "You Retain Control",
+        "trust3Desc": "Your team remains responsible for business decisions, payments, refunds, and order fulfillment. AI answers may need review.",
+        "trust4Title": "Test Before You Launch",
+        "trust4Desc": "After the initial deposit, privately test your customized assistant and request agreed corrections before approval and launch.",
+        "trust5Title": "Maintenance and standard support",
+        "trust5Desc": "Ongoing technical maintenance, issue investigation, and agreed small configuration or knowledge adjustments.",
+        "trust6Title": "Clear Scope & Terms",
+        "trust6Desc": "We agree on functionality, usage allowances, and any additional costs before work begins.",
+        "conversationKicker": "Retail demo conversations",
+        "conversationTitle": "A look at customer conversations.",
+        "conversationIntro": "Conversations from our retail demo: product recommendations, an order request, and a delivery question. Messages are shown in their original English in both language versions. Your assistant is tailored to your own business.",
+        "faqKicker": "Got questions?",
+        "faqTitle": "Frequently asked questions.",
+        "faqSubtitle": "Answers about your assistant, implementation, and monthly service.",
+        "faq1Q": "What is the difference between an AI chatbot and an AI agent?",
+        "faq1A": "A scripted chatbot follows predefined conversation paths. Our AI assistant uses your business information to answer questions and can perform configured tasks, such as stock lookups and collecting order requests.",
+        "faq2Q": "Can the agent answer questions about my products or services?",
+        "faq2A": "Yes. We configure the assistant with your product or service details, prices, opening hours, and FAQs. Its answers use the information you provide, with human review for exceptions.",
+        "faq3Q": "Can it collect order requests automatically?",
+        "faq3A": "Yes. The assistant collects customer and order details, asks the customer to confirm the request, and notifies the owner. Payment processing, fulfillment, and inventory updates are separate and require implemented, agreed integrations.",
+        "faq4Q": "Can the AI assistant replace customer support staff?",
+        "faq4A": "Our AI assistants can handle many routine customer inquiries automatically, reducing the need for manual support. However, human oversight remains important for exceptional situations, sensitive requests, and order fulfillment. You remain in control of your business.",
+        "faq5Q": "How long does implementation take?",
+        "faq5A": "A typical implementation may take approximately 5–15 business days, depending on your requirements and integrations. We'll review your needs and provide a clear timeline before development begins.",
+        "faq6Q": "Can I update my services and business information?",
+        "faq6A": "Yes. You can request updates to products, services, prices, FAQs, and business policies within the agreed maintenance scope.",
+        "faq7Q": "What does the monthly subscription include?",
+        "faq7A": "Maintenance and standard support include ongoing technical maintenance, issue investigation, and agreed small configuration or knowledge-base adjustments. Information updates are handled through this service, rather than automatic live synchronization. Major new features, integrations, additional channels, or major workflow changes require a separate quote.",
+        "faq8Q": "Are there any additional costs?",
+        "faq8A": "Your monthly subscription covers the agreed services and maintenance. Some messaging platforms may charge usage-based fees depending on your customer volume. Any applicable costs and usage limits are explained before you subscribe.",
+        "faq9Q": "Can I cancel the monthly subscription?",
+        "faq9A": "Cancellation terms and any notice period are discussed and included in your service agreement before you subscribe.",
+        "faq10Q": "Can I test my customized AI assistant before launch?",
+        "faq10A": "Yes. After the initial setup deposit, we'll configure your assistant and provide a private testing phase. You can review its performance and request agreed adjustments before paying the remaining setup balance and launching the service.",
+        "billingKicker": "Billing & payments",
+        "billingTitle": "Straightforward payment terms.",
+        "billingSubtitle": "For the $350 setup package: $175 before development, $175 after testing and approval. Payment methods are confirmed in your proposal.",
+        "billingItem1Title": "Discuss & agree",
+        "billingItem1Desc": "We review your requirements and provide a proposal with the scope, usage allowances, and fees.",
+        "billingItem2Title": "50% to begin",
+        "billingItem2Desc": "After scope agreement, pay $175 before we build and configure your customized assistant.",
+        "billingItem3Title": "Test & approve",
+        "billingItem3Desc": "Privately test the assistant and request agreed corrections. Pay the remaining $175 after approval and before production launch.",
+        "billingItem4Title": "Launch & subscribe",
+        "billingItem4Desc": "Your setup fee includes the first 30 days of service from launch. After that, the subscription is $99/month, billed in advance. Amounts reflect the starting package; your proposal confirms the agreed price.",
+        "ctaTryTitle": "Want to try it yourself?",
+        "ctaTryDescription": "Explore product questions and order requests in our free retail demo on WhatsApp. Private testing of your own customized assistant follows the setup deposit.",
+        "ctaTitle": "Ready to build an agent for your business?",
+        "ctaDescription": "From restaurants and retail stores to car washes and beyond — let’s discuss your customers, services, and everyday requests.",
+        "ctaWhatsapp": "WhatsApp",
+        "ctaEmail": "Email",
+        "ctaTestLive": "Test the agent live",
+        "footerDescription": "AI assistants for customer-facing businesses.",
+        "footerNote": "Built for real customer conversations.",
+        "playDemo": "Play demo video",
+        "toast": "Add the verified video source in the demo configuration.",
+        "getStarted": "Discuss your business",
+        "watchDemo": "See a demo",
+        "demoStoreNote": "Retail demo · ElectroMA. One example of a tailored assistant, not a limit on the businesses we serve.",
+        "channelDescription": "Available for WhatsApp, with additional messaging channels and website integration options discussed during consultation. The package covers one agreed channel; additional integrations may require a separate quote.",
+        "dashboardTitle": "Conversation Monitoring Dashboard",
+        "dashboardDescription": "Stay informed with a dedicated dashboard where you can review customer conversations handled by your AI assistant. Conversations refresh automatically approximately every 7 seconds, helping you keep track of customer inquiries and order requests.",
+        "dashboardDetails": "Password-protected access • WhatsApp-style interface • Conversations organized by customer • Incoming and outgoing messages • Manual refresh. Read-only: you cannot send messages from this dashboard.",
+        "packageTitle": "AI Customer Assistant",
+        "packageDescription": "Answers customer questions using your business information, product or service details, FAQs, and policies.",
+        "packageMonthly": "$99/month",
+        "packageSetup": "$350",
+        "packageF1": "Product & service guidance",
+        "packageF2": "Customer details & request collection",
+        "packageF3": "Customer confirmation before submission",
+        "packageF4": "Store owner notifications",
+        "packageF5": "Human escalation",
+        "packageF6": "Conversation monitoring dashboard",
+        "packageF7": "One messaging channel",
+        "packageF8": "Maintenance & standard support",
+        "packageMessage": "Hello, I'm interested in the OSADAagents AI Customer Assistant package. I'd like to discuss setting it up for my business.",
+        "emailSubject": "OSADAagents — AI Customer Assistant inquiry",
+        "openMenu": "Open menu",
+        "closeMenu": "Close menu",
+        "mainNavigation": "Main navigation",
+        "footerNavigation": "Footer navigation",
+        "chooseDemo": "Choose a demo",
+        "videoLabel": "OSADAagents demo video",
+        "languageLabel": "Language",
+        "homeLabel": "OSADAagents home",
+        "setupLabel": "one-time setup",
+        "pricingStructure": "Your setup fee includes the first 30 days of service from launch. $99/month thereafter.",
+        "industryRestaurant": "Restaurants & cafés",
+        "industryRestaurantDescription": "Menu questions, opening hours, and order inquiries — help customers decide before they visit or order.",
+        "industryCarWash": "Car washes & auto services",
+        "industryCarWashDescription": "Explain service packages and pricing, answer common questions, and collect booking inquiries for your team.",
+        "industryOther": "Your business",
+        "industryOtherDescription": "An assistant tailored to your information, services, and customer requests. We define the right workflows together.",
+        "industryNote": "Don’t see your industry? Let’s explore what an AI assistant could handle for your business.",
+        "industryContact": "Tell us about your business",
+        "contactHeading": "Contact us",
+        "contactDemoPrompt": "Want to try the agent first?",
+        "copyContact": "Copy",
+        "contactCopied": "Copied!",
+        "copyPhone": "Copy phone number",
+        "copyEmail": "Copy email address",
+        "contactCopyFailed": "Please select and copy the contact detail above."
+    },
+    "fr": {
+        "navProduct": "Produit",
+        "navProcess": "Processus",
+        "navPricing": "Tarifs",
+        "navTrust": "Fiabilité",
+        "navFaq": "FAQ",
+        "navContact": "Contact",
+        "navCta": "Tester l'agent en direct",
+        "heroEyebrow": "Service client, automatisé",
+        "heroTitle": "Vos clients ont des questions. Votre agent IA est prêt.",
+        "heroDescription": "OSADA Agents crée des assistants IA pour les restaurants, les commerces, les stations de lavage et les autres entreprises en contact avec leurs clients : réponses aux questions, collecte des demandes et accompagnement des clients.",
+        "heroNote": "Votre secteur. Vos informations. Votre façon de servir vos clients.",
+        "heroBadge1": "⚡ Assistance 24h/24",
+        "heroBadge2": "🌍 Support multilingue",
+        "heroBadge3": "💬 Collecte des demandes clients",
+        "demoKicker": "Un exemple, de nombreuses possibilités",
+        "demoTitle": "Voir en action.",
+        "demoSubtitle": "Découvrez un assistant configuré pour un commerce. Votre agent utiliserait les informations, les services et les processus convenus pour votre entreprise.",
+        "demoTab1": "Démo enregistrée de l’agent",
+        "videoPlaceholder": "Ajoutez la vraie démo vidéo ici",
+        "videoPlaceholderDetail": "Le lecteur est prêt pour votre source vidéo vérifiée.",
+        "demoContext": "Exemple d’utilisation · Commerce",
+        "capabilityKicker": "Ce qu'il fait",
+        "capabilityTitle": "Plus qu'un chatbot.",
+        "capabilityIntro": "OSADA Agents relie les questions clients aux informations et aux processus dont votre entreprise a besoin.",
+        "capability1": "Répondre aux questions clients 24h/24, 7j/7",
+        "capability2": "Prise en charge de l'anglais, du français, de l'arabe et plus",
+        "capability3": "Utiliser votre base de connaissances",
+        "capability4": "Guider les clients parmi vos produits et services",
+        "capability5": "Recueillir les coordonnées et demandes des clients",
+        "capability6": "Confirmer les demandes avant de notifier le propriétaire",
+        "capability7": "Notifier votre équipe",
+        "capability8": "Signaler les demandes nécessitant une aide humaine",
+        "customizationTitle": "Votre agent, à votre façon.",
+        "customizationDescription": "Choisissez son ton, son style de réponse, sa langue et son comportement pour refléter votre marque — de concis et professionnel à chaleureux et conversationnel, adapté à votre clientèle internationale.",
+        "processKicker": "Le processus d'intégration",
+        "processTitle": "Comment nous commençons.",
+        "processSubtitle": "Un parcours clair en 5 étapes pour déployer un agent IA adapté à votre activité.",
+        "step1Title": "Consultation gratuite",
+        "step1Description": "Nous découvrons votre activité, vos volumes de support et vos besoins spécifiques.",
+        "step2Title": "Informations sur votre activité",
+        "step2Description": "Vous partagez vos produits ou services, tarifs, conditions, FAQ et directives de marque.",
+        "step3Title": "Personnalisation de l'agent",
+        "step3Description": "Après accord sur le périmètre et versement de l’acompte de 50 %, nous configurons les connaissances, le ton et les processus convenus.",
+        "step4Title": "Tests & validation",
+        "step4Description": "Testez votre assistant personnalisé en privé et demandez les ajustements convenus. Validez-le avant de régler le solde de la configuration.",
+        "step5Title": "Lancement & suivi",
+        "step5Description": "Après validation et paiement du solde, votre assistant est lancé sur le canal convenu avec l’assistance standard. Les frais de configuration incluent les 30 premiers jours de service à compter du lancement ; la facturation mensuelle commence après ces 30 jours.",
+        "pricingTitle": "Tarifs",
+        "perMonth": "/ mois",
+        "pricingDisclaimers": "Tarifs de départ en USD. Le périmètre final, les limites d’utilisation et les éventuels frais supplémentaires sont convenus avant l’achat.",
+        "industryKicker": "Pour qui ?",
+        "industryTitle": "Pensé pour les entreprises comme la vôtre.",
+        "liveDemo": "Démo disponible",
+        "industryCurrent": "Commerces & boutiques en ligne",
+        "industryCurrentDescription": "Questions produits, disponibilité via les sources configurées et demandes de commande, en ligne ou en magasin.",
+        "exploreDemo": "Voir la démo",
+        "trustKicker": "Fiabilité par conception",
+        "trustTitle": "Une IA digne de confiance pour vous et vos clients.",
+        "trustSubtitle": "Conçue autour de vos informations, des processus convenus et d’une supervision humaine.",
+        "trust1Title": "Ancré dans vos connaissances",
+        "trust1Desc": "L’agent répond à partir des informations vérifiées sur vos produits ou services, de vos FAQ et des conditions de votre entreprise.",
+        "trust2Title": "Recours à une aide humaine",
+        "trust2Desc": "Les demandes sensibles ou complexes peuvent être signalées à votre équipe selon le processus convenu. Votre équipe assure le suivi.",
+        "trust3Title": "Vous gardez le contrôle",
+        "trust3Desc": "Votre équipe reste responsable des décisions commerciales, des paiements, des remboursements et de l’exécution des commandes. Les réponses de l’IA peuvent nécessiter une vérification.",
+        "trust4Title": "Testez avant le déploiement",
+        "trust4Desc": "Après l’acompte initial, testez votre assistant personnalisé en privé et demandez les corrections convenues avant validation et lancement.",
+        "trust5Title": "Maintenance et assistance standard",
+        "trust5Desc": "Maintenance technique continue, analyse des problèmes et petits ajustements convenus de configuration ou de connaissances.",
+        "trust6Title": "Périmètre et conditions clairs",
+        "trust6Desc": "Nous convenons des fonctionnalités, des volumes d’utilisation et des éventuels frais supplémentaires avant le début des travaux.",
+        "conversationKicker": "Conversations de la démo commerce",
+        "conversationTitle": "Un aperçu des échanges clients.",
+        "conversationIntro": "Des conversations de notre démo commerce : recommandations de produits, demande de commande et question sur la livraison. Les messages restent dans leur anglais d’origine dans les deux versions. Votre assistant est adapté à votre entreprise.",
+        "faqKicker": "Des questions ?",
+        "faqTitle": "Questions fréquentes.",
+        "faqSubtitle": "Des réponses sur votre assistant, sa mise en place et le service mensuel.",
+        "faq1Q": "Quelle est la différence entre un chatbot et un agent IA ?",
+        "faq1A": "Un chatbot à scénarios suit des parcours prédéfinis. Notre assistant IA utilise vos informations pour répondre aux questions et peut effectuer les tâches configurées, comme consulter les stocks et recueillir les demandes de commande.",
+        "faq2Q": "L’agent peut-il répondre aux questions sur mes produits ou services ?",
+        "faq2A": "Oui. Nous configurons l’assistant avec vos produits ou services, tarifs, horaires et FAQ. Ses réponses s’appuient sur vos informations, avec une vérification humaine pour les cas particuliers.",
+        "faq3Q": "Peut-il recueillir automatiquement les demandes de commande ?",
+        "faq3A": "Oui. L’assistant recueille les coordonnées et les détails de la commande, demande au client de confirmer sa demande, puis notifie le propriétaire. Le traitement des paiements, l’exécution des commandes et la mise à jour des stocks sont distincts et nécessitent des intégrations mises en œuvre et convenues.",
+        "faq4Q": "L’assistant IA peut-il remplacer le personnel du service client ?",
+        "faq4A": "Nos assistants IA peuvent traiter automatiquement de nombreuses demandes courantes, réduisant le besoin d’assistance manuelle. Toutefois, une supervision humaine reste importante pour les situations exceptionnelles, les demandes sensibles et l’exécution des commandes. Vous gardez le contrôle de votre entreprise.",
+        "faq5Q": "Combien de temps prend la mise en place ?",
+        "faq5A": "Une mise en place typique peut prendre environ 5 à 15 jours ouvrés, selon vos besoins et les intégrations. Nous étudierons vos besoins et vous fournirons un calendrier clair avant le début du développement.",
+        "faq6Q": "Puis-je mettre à jour mes services et les informations de mon entreprise ?",
+        "faq6A": "Oui. Vous pouvez demander des mises à jour de vos produits, services, prix, FAQ et conditions dans le cadre de la maintenance convenue.",
+        "faq7Q": "Que comprend l'abonnement mensuel ?",
+        "faq7A": "La maintenance et l’assistance standard comprennent la maintenance technique continue, l’analyse des problèmes et de petits ajustements convenus de configuration ou de connaissances. Les mises à jour des informations passent par ce service, sans synchronisation automatique en temps réel. Les nouvelles fonctionnalités importantes, intégrations, canaux ou modifications majeures des processus nécessitent un devis distinct.",
+        "faq8Q": "Y a-t-il des frais supplémentaires ?",
+        "faq8A": "Votre abonnement mensuel couvre les services et la maintenance convenus. Certaines plateformes de messagerie peuvent facturer des frais liés à l’utilisation selon votre volume de clients. Tous les frais applicables et les limites d’utilisation sont expliqués avant votre souscription.",
+        "faq9Q": "Puis-je résilier l'abonnement mensuel ?",
+        "faq9A": "Les conditions de résiliation et tout préavis sont discutés et inclus dans votre accord de service avant la souscription.",
+        "faq10Q": "Puis-je tester mon assistant IA personnalisé avant son lancement ?",
+        "faq10A": "Oui. Après le versement de l’acompte initial de configuration, nous configurerons votre assistant et organiserons une phase de tests privés. Vous pourrez évaluer ses performances et demander les ajustements convenus avant de régler le solde et de lancer le service.",
+        "billingKicker": "Facturation & paiements",
+        "billingTitle": "Des modalités de paiement transparentes.",
+        "billingSubtitle": "Pour une configuration à 350 $ : 175 $ avant le développement, puis 175 $ après tests et validation. Les moyens de paiement sont confirmés dans votre proposition.",
+        "billingItem1Title": "Échange et accord",
+        "billingItem1Desc": "Nous étudions vos besoins et fournissons une proposition précisant le périmètre, les volumes d’utilisation et les tarifs.",
+        "billingItem2Title": "50 % pour commencer",
+        "billingItem2Desc": "Après accord sur le périmètre, versez 175 $ avant la création et la configuration de votre assistant personnalisé.",
+        "billingItem3Title": "Tests et validation",
+        "billingItem3Desc": "Testez l’assistant en privé et demandez les corrections convenues. Réglez les 175 $ restants après validation et avant la mise en production.",
+        "billingItem4Title": "Lancement et abonnement",
+        "billingItem4Desc": "Les frais de configuration incluent les 30 premiers jours de service à compter du lancement. Ensuite, l’abonnement est de 99 $/mois, facturé d’avance. Ces montants correspondent au tarif de départ ; votre proposition confirme le prix convenu.",
+        "ctaTryTitle": "Vous voulez l'essayer vous-même ?",
+        "ctaTryDescription": "Découvrez les questions produits et les demandes de commande dans notre démo commerce gratuite sur WhatsApp. Les tests privés de votre assistant personnalisé suivent le versement de l’acompte.",
+        "ctaTitle": "Prêt à créer un agent pour votre entreprise ?",
+        "ctaDescription": "Restaurants, commerces, stations de lavage et bien d’autres : parlons de vos clients, de vos services et de leurs demandes quotidiennes.",
+        "ctaWhatsapp": "WhatsApp",
+        "ctaEmail": "Email",
+        "ctaTestLive": "Tester l’agent en direct",
+        "footerDescription": "Des assistants IA pour les entreprises en contact avec leurs clients.",
+        "footerNote": "Conçu pour de vraies conversations clients.",
+        "playDemo": "Lire la vidéo de démo",
+        "toast": "Ajoutez la source vidéo vérifiée dans la configuration des démos.",
+        "getStarted": "Parlons de votre activité",
+        "watchDemo": "Voir une démo",
+        "demoStoreNote": "Démo commerce · ElectroMA. Un exemple d’assistant personnalisé, pas une limite aux secteurs que nous accompagnons.",
+        "channelDescription": "Disponible sur WhatsApp. Les autres canaux de messagerie et les possibilités d’intégration à un site web sont étudiés lors de la consultation. Le forfait couvre un canal convenu ; les intégrations supplémentaires peuvent nécessiter un devis distinct.",
+        "dashboardTitle": "Tableau de suivi des conversations",
+        "dashboardDescription": "Suivez les échanges pris en charge par votre assistant IA dans un tableau de bord dédié. Les conversations s’actualisent automatiquement environ toutes les 7 secondes pour vous aider à suivre les questions des clients et les demandes de commande.",
+        "dashboardDetails": "Accès protégé par mot de passe • Interface de type WhatsApp • Conversations classées par client • Messages reçus et envoyés • Actualisation manuelle. Consultation uniquement : vous ne pouvez pas envoyer de messages depuis ce tableau de bord.",
+        "packageTitle": "Assistant IA pour le service client",
+        "packageDescription": "Répond aux questions à partir des informations de votre entreprise, de vos produits ou services, de vos FAQ et conditions.",
+        "packageMonthly": "99 $/mois",
+        "packageSetup": "350 $",
+        "packageF1": "Conseils sur les produits et services",
+        "packageF2": "Coordonnées et demandes clients",
+        "packageF3": "Confirmation du client avant transmission",
+        "packageF4": "Notifications au propriétaire",
+        "packageF5": "Recours à une aide humaine",
+        "packageF6": "Tableau de suivi des conversations",
+        "packageF7": "Un canal de messagerie",
+        "packageF8": "Maintenance et assistance standard",
+        "packageMessage": "Bonjour, je suis intéressé(e) par le forfait Assistant IA pour le service client de OSADAagents. J’aimerais discuter de sa mise en place pour mon entreprise.",
+        "emailSubject": "OSADAagents — Demande concernant l’assistant IA",
+        "openMenu": "Ouvrir le menu",
+        "closeMenu": "Fermer le menu",
+        "mainNavigation": "Navigation principale",
+        "footerNavigation": "Navigation de pied de page",
+        "chooseDemo": "Choisir une démo",
+        "videoLabel": "Vidéo de démonstration OSADAagents",
+        "languageLabel": "Langue",
+        "homeLabel": "Accueil OSADAagents",
+        "setupLabel": "de configuration initiale",
+        "pricingStructure": "Les frais de configuration incluent les 30 premiers jours de service à compter du lancement. Puis 99 $/mois.",
+        "industryRestaurant": "Restaurants & cafés",
+        "industryRestaurantDescription": "Questions sur le menu, horaires et demandes de commande : aidez vos clients avant leur visite ou leur commande.",
+        "industryCarWash": "Lavage & services automobiles",
+        "industryCarWashDescription": "Présentez vos prestations et tarifs, répondez aux questions et recueillez les demandes de réservation pour votre équipe.",
+        "industryOther": "Votre entreprise",
+        "industryOtherDescription": "Un assistant adapté à vos informations, vos services et aux demandes de vos clients. Nous définissons ensemble les processus appropriés.",
+        "industryNote": "Votre secteur n’est pas affiché ? Voyons ensemble ce qu’un assistant IA pourrait prendre en charge pour votre entreprise.",
+        "industryContact": "Parlez-nous de votre activité",
+        "contactHeading": "Contactez-nous",
+        "contactDemoPrompt": "Vous souhaitez d’abord essayer l’agent ?",
+        "copyContact": "Copier",
+        "contactCopied": "Copié !",
+        "copyPhone": "Copier le numéro de téléphone",
+        "copyEmail": "Copier l’adresse email",
+        "contactCopyFailed": "Veuillez sélectionner et copier les coordonnées ci-dessus."
+    }
+};
 
-        const demoConfigs = {
-            customerQuestions: {
-                title: { en: "Customer questions", fr: "Questions clients" },
-                description: {
-                    en: "Customers can ask about products, delivery, availability, specifications, and more.",
-                    fr: "Les clients peuvent demander des informations sur les produits, la livraison, la disponibilité, les caractéristiques et plus."
-                }
-            },
-            orders: {
-                title: { en: "Orders", fr: "Commandes" },
-                description: {
-                    en: "The agent collects order details, confirms the order, and can notify the store owner.",
-                    fr: "L'agent collecte les détails, confirme la commande et peut notifier le propriétaire de la boutique."
-                }
+        const demoConfig = {
+            title: { en: "Recorded agent demo", fr: "Démo enregistrée de l’agent" },
+            description: {
+                en: "Follow a recorded conversation with our retail demo agent.",
+                fr: "Suivez une conversation enregistrée avec notre agent de démonstration pour le commerce."
             }
         };
 
         let lang = "en";
-        let activeDemo = "customerQuestions";
         const header = document.getElementById("site-header");
         const demoStage = document.querySelector(".demo-stage");
         const demoVideo = document.querySelector(".demo-video");
@@ -2073,18 +3113,40 @@
             window.__toastTimer = window.setTimeout(() => toast.classList.remove("show"), 3000);
         }
 
+        async function copyContact(button) {
+            const value = button.dataset.copyValue;
+            const status = document.querySelector(".contact-copy-status");
+            let copied = false;
+            try {
+                await navigator.clipboard.writeText(value);
+                copied = true;
+            } catch {
+                const field = document.createElement("textarea");
+                field.value = value;
+                field.style.cssText = "position:fixed;left:-9999px;top:0";
+                field.setAttribute("readonly", "");
+                document.body.appendChild(field);
+                field.select();
+                try { copied = document.execCommand("copy"); } catch {}
+                field.remove();
+                button.focus();
+            }
+            status.textContent = copied ? translations[lang].contactCopied + " " + value : translations[lang].contactCopyFailed;
+            button.textContent = copied ? translations[lang].contactCopied : translations[lang].copyContact;
+            window.clearTimeout(button.copyTimer);
+            button.copyTimer = window.setTimeout(() => { button.textContent = translations[lang].copyContact; }, 2500);
+        }
+        document.querySelectorAll(".copy-contact").forEach(button => {
+            button.addEventListener("click", () => copyContact(button));
+        });
+
         function renderDemo() {
-            const config = demoConfigs[activeDemo];
+            const config = demoConfig;
             document.querySelector("[data-demo-title]").textContent = config.title[lang];
             document.querySelector("[data-demo-description]").textContent = config.description[lang];
-            document.querySelectorAll(".demo-tab").forEach((tab) => {
-                const active = tab.dataset.demo === activeDemo;
-                tab.classList.toggle("active", active);
-                tab.setAttribute("aria-selected", String(active));
-            });
-            const source = demoSources[activeDemo];
+            const source = demoSource;
             if (source) {
-                demoVideo.src = source;
+                if (demoVideo.getAttribute("src") !== source) demoVideo.src = source;
                 demoVideo.controls = true;
                 demoVideo.classList.add("has-source");
             } else {
@@ -2095,6 +3157,7 @@
         }
 
         function render() {
+            document.querySelector(".contact-copy-status").textContent = "";
             const t = translations[lang];
             document.documentElement.lang = lang;
             document.querySelectorAll("[data-copy]").forEach((element) => {
@@ -2110,31 +3173,23 @@
             document.querySelectorAll("[data-lang]").forEach((button) => {
                 button.classList.toggle("active", button.dataset.lang === lang);
             });
-            document.querySelectorAll("[data-whatsapp]").forEach((link) => {
-                link.href = WHATSAPP_LINK;
-            });
+            const message = encodeURIComponent(t.packageMessage);
+            document.querySelector("[data-business-whatsapp]").href = BUSINESS_WHATSAPP + "?text=" + message;
+            const email = document.querySelector("[data-business-email]");
+            email.hidden = !VERIFIED_BUSINESS_EMAIL;
+            if (VERIFIED_BUSINESS_EMAIL) { email.href = "mailto:" + VERIFIED_BUSINESS_EMAIL + "?subject=" + encodeURIComponent(t.emailSubject) + "&body=" + message; }
+            document.querySelectorAll("[data-aria-copy]").forEach(element => element.setAttribute("aria-label", t[element.dataset.ariaCopy]));
+            document.querySelector(".menu-button").setAttribute("aria-label", header.classList.contains("nav-open") ? t.closeMenu : t.openMenu);
             document.querySelector(".demo-play").setAttribute("aria-label", t.playDemo);
             renderDemo();
         }
 
-        function setActiveDemo(nextDemo) {
-            if (nextDemo === activeDemo) return;
-            activeDemo = nextDemo;
-            demoStage.classList.add("is-switching");
-            window.setTimeout(() => {
-                renderDemo();
-                demoStage.classList.remove("is-switching");
-            }, 140);
-        }
 
         document.querySelectorAll("[data-lang]").forEach((button) => {
             button.addEventListener("click", () => {
                 lang = button.dataset.lang;
                 render();
             });
-        });
-        document.querySelectorAll(".demo-tab").forEach((tab) => {
-            tab.addEventListener("click", () => setActiveDemo(tab.dataset.demo));
         });
         document.querySelector(".demo-play").addEventListener("click", () => {
             if (demoVideo.src) {
@@ -2153,17 +3208,28 @@
                 answer.classList.toggle("open", !open);
             });
         });
+        document.querySelectorAll(".faq-trigger").forEach((trigger) => {
+            trigger.addEventListener("click", () => {
+                const answer = document.getElementById(trigger.getAttribute("aria-controls"));
+                const open = trigger.getAttribute("aria-expanded") === "true";
+                document.querySelectorAll(".faq-trigger").forEach((item) => item.setAttribute("aria-expanded", "false"));
+                document.querySelectorAll(".faq-answer").forEach((item) => item.classList.remove("open"));
+                trigger.setAttribute("aria-expanded", String(!open));
+                answer.classList.toggle("open", !open);
+            });
+        });
         document.querySelector(".menu-button").addEventListener("click", () => {
             const open = header.classList.toggle("nav-open");
             document.body.classList.toggle("menu-open", open);
             document.querySelector(".menu-button").setAttribute("aria-expanded", String(open));
-            document.querySelector(".menu-button").setAttribute("aria-label", open ? "Close menu" : "Open menu");
+            document.querySelector(".menu-button").setAttribute("aria-label", open ? translations[lang].closeMenu : translations[lang].openMenu);
         });
         document.querySelectorAll(".site-nav a").forEach((link) => {
             link.addEventListener("click", () => {
                 header.classList.remove("nav-open");
                 document.body.classList.remove("menu-open");
                 document.querySelector(".menu-button").setAttribute("aria-expanded", "false");
+                document.querySelector(".menu-button").setAttribute("aria-label", translations[lang].openMenu);
             });
         });
 
